@@ -142,7 +142,7 @@ namespace ConferenceApp.Controllers
 
         //
         // POST: /Account/Manage
-
+        private UsersContext db = new UsersContext();
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Manage(LocalPasswordModel model)
@@ -205,13 +205,33 @@ namespace ConferenceApp.Controllers
 
         public ActionResult EditProfile()
         {
-            return View();
+            var name = User.Identity.Name;
+            var record = (from p in db.UserProfiles
+                          where p.FirstName == name
+                          select p).First();
+            return View(record);
         }
 
         [HttpPost]
         public ActionResult EditProfile(UserProfile model)
         {
-            return View(model);
+            try
+            {
+                var name = User.Identity.Name;
+                var data = (from p in db.UserProfiles
+                            where p.FirstName == name
+                            select p).First();
+                if (!ModelState.IsValid)
+                    return View(model);
+                UpdateModel(data);
+                //db.Entry(data).CurrentValues.SetValues(db.UserProfiles);
+                db.SaveChanges();
+                return View(data);
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         //
