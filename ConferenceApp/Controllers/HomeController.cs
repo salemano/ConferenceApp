@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Model;
 
 namespace ConferenceApp.Controllers
 {
@@ -10,6 +11,13 @@ namespace ConferenceApp.Controllers
     {
         public ActionResult Index()
         {
+            //using (var db = new ConferenceContext())
+            //{
+            //    var users = db.Users;
+            //    db.SaveChanges();
+            //}
+ 
+
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
             return View();

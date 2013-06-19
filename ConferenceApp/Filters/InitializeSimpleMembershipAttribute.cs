@@ -5,6 +5,7 @@ using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
 using ConferenceApp.Models;
+using Model;
 
 namespace ConferenceApp.Filters
 {
@@ -14,6 +15,7 @@ namespace ConferenceApp.Filters
         private static SimpleMembershipInitializer _initializer;
         private static object _initializerLock = new object();
         private static bool _isInitialized;
+        private static string ConnectionString = @"Data Source=.\sqlExpress;Initial Catalog=Session;Integrated Security=True";
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -25,11 +27,11 @@ namespace ConferenceApp.Filters
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+                Database.SetInitializer<ConferenceContext>(null);
 
                 try
                 {
-                    using (var context = new UsersContext())
+                    using (var context = new ConferenceContext(ConnectionString))
                     {
                         if (!context.Database.Exists())
                         {
@@ -38,7 +40,7 @@ namespace ConferenceApp.Filters
                         }
                     }
 
-                    WebSecurity.InitializeDatabaseConnection("UsersContextConnection", "UserProfile", "UserId", "FirstName", autoCreateTables: true);
+                    WebSecurity.InitializeDatabaseConnection("ConferenceContextConnection", "Users", "UserId", "FirstName", autoCreateTables: true);
                 }
                 catch (Exception ex)
                 {

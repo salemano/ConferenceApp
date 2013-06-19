@@ -10,6 +10,8 @@ using Microsoft.Web.WebPages.OAuth;
 using WebMatrix.WebData;
 using ConferenceApp.Filters;
 using ConferenceApp.Models;
+using Model.Models;
+using Model;
 
 namespace ConferenceApp.Controllers
 {
@@ -19,6 +21,9 @@ namespace ConferenceApp.Controllers
     {
         //
         // GET: /Account/Login
+        private static string ConnectionString = @"Data Source=.\sqlExpress;Initial Catalog=Session;Integrated Security=True";
+
+        private ConferenceContext context = new ConferenceContext(ConnectionString);
 
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -80,9 +85,9 @@ namespace ConferenceApp.Controllers
                 try
                 {
                     WebSecurity.CreateUserAndAccount(model.FirstName, model.Password, 
-                        new { FirstName = model.FirstName, LastName = model.LastName, ImageUrl = model.ImageUrl,
+                        new { FirstName = model.FirstName,MiddleName=model.MiddleName, LastName = model.LastName,
                             DateOfBirth = model.DateOfBirth, Email = model.Email, PhoneNumber = model.PhoneNumber,
-                            Comment = model.Comment });
+                            Comment = model.Comment, IsAdministrator=false });
                     WebSecurity.Login(model.FirstName, model.Password);
                     return RedirectToAction("Index", "Home");
                 }
@@ -139,10 +144,10 @@ namespace ConferenceApp.Controllers
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
         }
-
+      
         //
         // POST: /Account/Manage
-        private UsersContext db = new UsersContext();
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Manage(LocalPasswordModel model)
@@ -205,27 +210,34 @@ namespace ConferenceApp.Controllers
 
         public ActionResult EditProfile()
         {
+            try
+            {
             var name = User.Identity.Name;
-            var record = (from p in db.UserProfiles
+            var record = (from p in context.Users
                           where p.FirstName == name
                           select p).First();
             return View(record);
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         [HttpPost]
-        public ActionResult EditProfile(UserProfile model)
+        public ActionResult EditProfile(User model)
         {
             try
             {
                 var name = User.Identity.Name;
-                var data = (from p in db.UserProfiles
+                var data = (from p in context.Users
                             where p.FirstName == name
                             select p).First();
                 if (!ModelState.IsValid)
-                    return View(model);
+                    throw new Exception();
                 UpdateModel(data);
                 //db.Entry(data).CurrentValues.SetValues(db.UserProfiles);
-                db.SaveChanges();
+                context.SaveChanges();
                 return View(data);
             }
             catch
@@ -297,14 +309,14 @@ namespace ConferenceApp.Controllers
             if (ModelState.IsValid)
             {
                 // Insert a new user into the database
-                using (UsersContext db = new UsersContext())
+                using (ConferenceContext db = new ConferenceContext(ConnectionString))
                 {
-                    UserProfile user = db.UserProfiles.FirstOrDefault(u => u.FirstName.ToLower() == model.UserName.ToLower());
+                    User _user = db.Users.FirstOrDefault(u => u.FirstName.ToLower() == model.UserName.ToLower());
                     // Check if user already exists
-                    if (user == null)
+                    if (_user == null)
                     {
                         // Insert name into the profile table
-                        db.UserProfiles.Add(new UserProfile { FirstName = model.UserName });
+                        db.Users.Add(new User { FirstName = model.UserName });
                         db.SaveChanges();
 
                         OAuthWebSecurity.CreateOrUpdateAccount(provider, providerUserId, model.UserName);

@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Web
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConferenceApp", "ConferenceApp\ConferenceApp.csproj", "{F8497B7E-79E9-469C-94D2-F1CBA83F4C21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{915F4927-9692-48F1-AC4C-AFE005095EBB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{860D17BA-D1C0-4BC6-977F-8F38B2D871D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +17,14 @@ Global
 		{F8497B7E-79E9-469C-94D2-F1CBA83F4C21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8497B7E-79E9-469C-94D2-F1CBA83F4C21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8497B7E-79E9-469C-94D2-F1CBA83F4C21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{915F4927-9692-48F1-AC4C-AFE005095EBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{915F4927-9692-48F1-AC4C-AFE005095EBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{915F4927-9692-48F1-AC4C-AFE005095EBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{915F4927-9692-48F1-AC4C-AFE005095EBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{860D17BA-D1C0-4BC6-977F-8F38B2D871D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{860D17BA-D1C0-4BC6-977F-8F38B2D871D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{860D17BA-D1C0-4BC6-977F-8F38B2D871D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{860D17BA-D1C0-4BC6-977F-8F38B2D871D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

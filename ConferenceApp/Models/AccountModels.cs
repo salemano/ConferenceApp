@@ -8,30 +8,30 @@ using System.Web.Security;
 
 namespace ConferenceApp.Models
 {
-    public class UsersContext : DbContext
-    {
-        public UsersContext()
-            : base("UsersContextConnection")
-        {
-        }
+    //public class UsersContext : DbContext
+    //{
+    //    public UsersContext()
+    //        : base("UsersContextConnection")
+    //    {
+    //    }
 
-        public DbSet<UserProfile> UserProfiles { get; set; }
-    }
+    //    public DbSet<UserProfile> UserProfiles { get; set; }
+    //}
 
-    [Table("UserProfile")]
-    public class UserProfile
-    {
-        [Key]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string ImageUrl { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public string Email { get; set; }
-        public int PhoneNumber { get; set; }
-        public string Comment { get; set; }
-    }
+    //[Table("UserProfile")]
+    //public class UserProfile
+    //{
+    //    [Key]
+    //    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+    //    public int UserId { get; set; }
+    //    public string FirstName { get; set; }
+    //    public string LastName { get; set; }
+    //    public string ImageUrl { get; set; }
+    //    public DateTime DateOfBirth { get; set; }
+    //    public string Email { get; set; }
+    //    public int PhoneNumber { get; set; }
+    //    public string Comment { get; set; }
+    //}
 
     public class RegisterExternalLoginModel
     {
@@ -76,25 +76,27 @@ namespace ConferenceApp.Models
         public bool RememberMe { get; set; }
     }
 
-    public class RegisterModel
+    public class EditModel
     {
         [Required]
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 
-        //Added
-        //{
+        [Required]
+        [Display(Name = "Middle name")]
+        public string MiddleName { get; set; }
+
         [Required]
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
-        [Display(Name="Photo")]
-        [DataType(DataType.ImageUrl)]
-        public string ImageUrl { get; set; }
+        [Display(Name = "Photo")]
+        //[DataType(DataType.ImageUrl)]
+        public int PhotoId { get; set; }
 
         [Required]
         [Display(Name = "Date of birth")]
-        [DataType(DataType.Date), DisplayFormat( DataFormatString="{0:dd/MM/yyyy}",ApplyFormatInEditMode=true)]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public Nullable<DateTime> DateOfBirth { get; set; }
 
         [Required]
@@ -110,7 +112,44 @@ namespace ConferenceApp.Models
         [DataType(DataType.Text)]
         public string Comment { get; set; }
 
-        //}
+    }
+
+    public class RegisterModel
+    {
+        [Required]
+        [Display(Name = "First name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Middle name")]
+        public string MiddleName { get; set; }
+
+        [Required]
+        [Display(Name = "Last name")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Photo")]
+        //[DataType(DataType.ImageUrl)]
+        public int PhotoId { get; set; }
+
+        [Required]
+        [Display(Name = "Date of birth")]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public Nullable<DateTime> DateOfBirth { get; set; }
+
+        [Required]
+        [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+
+        [Display(Name = "Phone number")]
+        [DataType(DataType.PhoneNumber)]
+        public int PhoneNumber { get; set; }
+
+        [Display(Name = "Comment")]
+        [DataType(DataType.Text)]
+        public string Comment { get; set; }
+
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]

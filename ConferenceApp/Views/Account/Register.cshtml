@@ -20,12 +20,16 @@
                 @Html.TextBoxFor(m => m.FirstName)
             </li>
             <li>
+                @Html.LabelFor(m => m.MiddleName)
+                @Html.TextBoxFor(m => m.MiddleName)
+            </li>
+            <li>
                 @Html.LabelFor(m => m.LastName)
                 @Html.TextBoxFor(m => m.LastName)
             </li>
             <li>
-                @Html.LabelFor(m => m.ImageUrl)
-                @Html.TextBoxFor(m => m.ImageUrl)
+                @Html.LabelFor(m => m.PhotoId)
+                @Html.TextBoxFor(m => m.PhotoId)
             </li>
             <li>
                 @Html.LabelFor(m => m.DateOfBirth)
