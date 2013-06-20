@@ -7,12 +7,11 @@ using System.Text;
 
 namespace Model.Models
 {
-    [Table("Users")]
     public class User
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
+        public int Id { get; set; }
 
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -21,7 +20,7 @@ namespace Model.Models
         //public int PhotoId { get; set; }
         public Nullable<DateTime> DateOfBirth { get; set; }
         public string Email { get; set; }
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public string Comment { get; set; }
 
         public Guid? ActivationToken { get; set; }

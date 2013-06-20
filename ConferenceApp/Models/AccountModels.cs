@@ -128,9 +128,9 @@ namespace ConferenceApp.Models
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
-        [Display(Name = "Photo")]
-        //[DataType(DataType.ImageUrl)]
-        public int PhotoId { get; set; }
+        //[Display(Name = "Photo")]
+        ////[DataType(DataType.ImageUrl)]
+        //public int PhotoId { get; set; }
 
         [Required]
         [Display(Name = "Date of birth")]
@@ -144,7 +144,7 @@ namespace ConferenceApp.Models
 
         [Display(Name = "Phone number")]
         [DataType(DataType.PhoneNumber)]
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         [Display(Name = "Comment")]
         [DataType(DataType.Text)]

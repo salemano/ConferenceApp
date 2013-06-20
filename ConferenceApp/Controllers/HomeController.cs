@@ -4,9 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Model;
+using ConferenceApp.Filters;
 
 namespace ConferenceApp.Controllers
 {
+    [Localization]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -21,6 +23,17 @@ namespace ConferenceApp.Controllers
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
             return View();
+        }
+
+        public ActionResult ChangeCulture()
+        {
+            if (Session["culture"] == null)
+                Session["culture"] = "en";
+            else
+                Session["culture"] = (Session["culture"].ToString() == "ru")
+                    ? "en" : "ru";
+            var p = Session["culture"].ToString();
+            return RedirectToAction("Index");
         }
 
         public ActionResult About()

@@ -54,6 +54,10 @@
     <Compile Include="Migrations\201306191226249_AddedUsersTable.Designer.cs">
       <DependentUpon>201306191226249_AddedUsersTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201306200826255_UserTableUpdate.cs" />
+    <Compile Include="Migrations\201306200826255_UserTableUpdate.Designer.cs">
+      <DependentUpon>201306200826255_UserTableUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,6 +69,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201306191226249_AddedUsersTable.resx">
       <DependentUpon>201306191226249_AddedUsersTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306200826255_UserTableUpdate.resx">
+      <DependentUpon>201306200826255_UserTableUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

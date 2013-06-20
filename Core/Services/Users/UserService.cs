@@ -3,19 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Security;
+using Model;
+using Model.Models;
 
 namespace Core.Services
 {
-    public class UserService
+    public class UserService: IUserService
     {
+        private readonly ConferenceContext _context;
+
+        public UserService(ConferenceContext context)
+        {
+            _context = context;
+        }
+
         public void SignIn(String userName, bool stayLoggedIn)
         {
             FormsAuthentication.SetAuthCookie(userName, stayLoggedIn);
         }
 
-    	public void SignOut()
+        public void SignOut()
         {
             FormsAuthentication.SignOut();
+        }
+
+        public User Create(User user)
+        {
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            return user;
         }
 
         //public UserSignInValidationResult ValidateUser(string email, string password, bool onlyCurrentCompetition)

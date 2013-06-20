@@ -18,26 +18,31 @@
             <li>
                 @Html.LabelFor(m => m.FirstName)
                 @Html.TextBoxFor(m => m.FirstName)
+                @Html.ValidationMessageFor(m => m.FirstName)
             </li>
             <li>
                 @Html.LabelFor(m => m.MiddleName)
                 @Html.TextBoxFor(m => m.MiddleName)
+                @Html.ValidationMessageFor(m => m.MiddleName)
             </li>
             <li>
                 @Html.LabelFor(m => m.LastName)
                 @Html.TextBoxFor(m => m.LastName)
+                @Html.ValidationMessageFor(m => m.LastName)
             </li>
             <li>
-                @Html.LabelFor(m => m.PhotoId)
-                @Html.TextBoxFor(m => m.PhotoId)
+@*                @Html.LabelFor(m => m.PhotoId)
+                @Html.TextBoxFor(m => m.PhotoId)*@
             </li>
             <li>
                 @Html.LabelFor(m => m.DateOfBirth)
-                @Html.TextBoxFor(m => m.DateOfBirth)
+                @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "datetime-picker" })
+                @Html.ValidationMessageFor(m => m.DateOfBirth)
             </li>
             <li>
                 @Html.LabelFor(m => m.Email)
                 @Html.TextBoxFor(m => m.Email)
+                @Html.ValidationMessageFor(m => m.Email)
             </li>
             <li>
                 @Html.LabelFor(m => m.PhoneNumber)
@@ -50,10 +55,12 @@
             <li>
                 @Html.LabelFor(m => m.Password)
                 @Html.PasswordFor(m => m.Password)
+                @Html.ValidationMessageFor(m => m.Password)
             </li>
             <li>
                 @Html.LabelFor(m => m.ConfirmPassword)
                 @Html.PasswordFor(m => m.ConfirmPassword)
+                @Html.ValidationMessageFor(m => m.ConfirmPassword)
             </li>
         </ol>
         <input type="submit" value="Register" />

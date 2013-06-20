@@ -12,13 +12,22 @@ using ConferenceApp.Filters;
 using ConferenceApp.Models;
 using Model.Models;
 using Model;
+using Core.Services;
+using Core.Security;
 
 namespace ConferenceApp.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
     public class AccountController : Controller
     {
+        private IUserService _userService;
+        private ICryptographyService _cryptographyService;
+
+        public AccountController(IUserService userService, ICryptographyService cryptographyService)
+        {
+            _userService = userService;
+            _cryptographyService = cryptographyService;
+        }
         //
         // GET: /Account/Login
         private static string ConnectionString = @"Data Source=.\sqlExpress;Initial Catalog=Session;Integrated Security=True";
@@ -79,26 +88,60 @@ namespace ConferenceApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterModel model)
         {
-            if (ModelState.IsValid)
-            {
-                // Attempt to register the user
-                try
-                {
-                    WebSecurity.CreateUserAndAccount(model.FirstName, model.Password, 
-                        new { FirstName = model.FirstName,MiddleName=model.MiddleName, LastName = model.LastName,
-                            DateOfBirth = model.DateOfBirth, Email = model.Email, PhoneNumber = model.PhoneNumber,
-                            Comment = model.Comment, IsAdministrator=false });
-                    WebSecurity.Login(model.FirstName, model.Password);
-                    return RedirectToAction("Index", "Home");
-                }
-                catch (MembershipCreateUserException e)
-                {
-                    ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
-                }
-            }
+            if (!ModelState.IsValid)
+                return View(model);
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            ValidateRegisterModel(model);
+
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var salt = _cryptographyService.GetRandomString(50, false, false);
+
+            var user = new User
+            {
+                FirstName = model.FirstName,
+                MiddleName = model.MiddleName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
+                Comment = model.Comment,
+                IsAdministrator = false,
+                Password = _cryptographyService.EncryptPassword(model.Password + salt),
+                PasswordSalt = salt,
+                ActivationToken = Guid.NewGuid(),
+            };
+
+            _userService.Create(user);
+
+            // send email with cinfirmation and activation link
+
+            //if (ModelState.IsValid)
+            //{
+            //    // Attempt to register the user
+            //    try
+            //    {
+            //        WebSecurity.CreateUserAndAccount(model.FirstName, model.Password, 
+            //            new { FirstName = model.FirstName,MiddleName=model.MiddleName, LastName = model.LastName,
+            //                DateOfBirth = model.DateOfBirth, Email = model.Email, PhoneNumber = model.PhoneNumber,
+            //                Comment = model.Comment, IsAdministrator=false });
+            //        WebSecurity.Login(model.FirstName, model.Password);
+            //        return RedirectToAction("Index", "Home");
+            //    }
+            //    catch (MembershipCreateUserException e)
+            //    {
+            //        ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
+            //    }
+            //}
+
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        void ValidateRegisterModel(RegisterModel model)
+        {
+            // add check if user email already exists in a system
         }
 
         //
