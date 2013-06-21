@@ -100,10 +100,10 @@ C:\Assembla\practiceapp\ConferenceApp\bin\zh-Hans\System.Spatial.resources.dll
 C:\Assembla\practiceapp\ConferenceApp\bin\zh-Hant\System.Spatial.resources.dll
 C:\Assembla\practiceapp\ConferenceApp\obj\Debug\ConferenceApp.csprojResolveAssemblyReference.cache
 C:\Assembla\practiceapp\ConferenceApp\obj\Debug\ConferenceApp.Resourses.Home.HomeResourses.resources
-C:\Assembla\practiceapp\ConferenceApp\obj\Debug\ConferenceApp.Resourses.Shared._Layout.resources
 C:\Assembla\practiceapp\ConferenceApp\obj\Debug\ConferenceApp.Resourses.Home.HomeResourses.ru.resources
-C:\Assembla\practiceapp\ConferenceApp\obj\Debug\ConferenceApp.Resourses.Shared._Layout.ru.resources
 C:\Assembla\practiceapp\ConferenceApp\obj\Debug\ConferenceApp.csproj.GenerateResource.Cache
 C:\Assembla\practiceapp\ConferenceApp\obj\Debug\ru\ConferenceApp.resources.dll
 C:\Assembla\practiceapp\ConferenceApp\obj\Debug\ConferenceApp.dll
 C:\Assembla\practiceapp\ConferenceApp\obj\Debug\ConferenceApp.pdb
+C:\Assembla\practiceapp\ConferenceApp\obj\Debug\ConferenceApp.Resourses.Shared._LayoutResourses.resources
+C:\Assembla\practiceapp\ConferenceApp\obj\Debug\ConferenceApp.Resourses.Shared._LayoutResourses.ru.resources

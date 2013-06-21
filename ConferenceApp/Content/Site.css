@@ -95,7 +95,7 @@ h5, h6 {
 ----------------------------------------------------------*/
 .content-wrapper {
     margin: 0 auto;
-    max-width: 960px;
+    max-width: 1000px;
 }
 
 #body {
@@ -105,7 +105,7 @@ h5, h6 {
 }
 
     .main-content {
-        background: url("../Images/accent.png") no-repeat;
+        background: url("../Images/Body-skin.png") no-repeat;
         padding-left: 10px;
         padding-top: 30px;
     }
@@ -213,18 +213,18 @@ ul#menu {
 }
 
     .featured .content-wrapper {
-        background-color: #7ac0da;
+        /*background-color: #7ac0da;
         background-image: -ms-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
         background-image: -o-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
         background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #7ac0da), color-stop(1, #a4d4e6));
         background-image: -webkit-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
         background-image: linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
         color: #3e5667;
-        padding: 20px 40px 30px 40px;
+        padding: 20px 40px 30px 40px;*/
     }
 
         .featured hgroup.title h1, .featured hgroup.title h2 {
-            color: #fff;
+            color: black;
         }
 
         .featured p {

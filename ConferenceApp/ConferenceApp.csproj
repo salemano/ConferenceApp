@@ -53,6 +53,9 @@
     <Reference Include="Ninject.Web.Mvc">
       <HintPath>..\packages\Ninject.MVC3.3.0.0.6\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="RazorEngine">
+      <HintPath>..\packages\RazorEngine.3.2.0\lib\net40\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -63,6 +66,10 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -107,10 +114,6 @@
     </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20715.0\lib\net40\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -202,7 +205,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\CustomRoleProvider.cs" />
+    <Compile Include="Infrastructure\Helper.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\EmailModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resourses\Home\HomeResourses.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -214,18 +219,34 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HomeResourses.ru.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resourses\Shared\_Layout.Designer.cs">
+    <Compile Include="Resourses\Shared\_LayoutResourses.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>_Layout.resx</DependentUpon>
+      <DependentUpon>_LayoutResourses.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resourses\Shared\_Layout.ru.Designer.cs">
+    <Compile Include="Resourses\Shared\_LayoutResourses.ru.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>_Layout.ru.resx</DependentUpon>
+      <DependentUpon>_LayoutResourses.ru.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\smoothness\images\animated-overlay.gif" />
+    <Content Include="Content\smoothness\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\smoothness\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\smoothness\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\smoothness\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\smoothness\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\smoothness\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\smoothness\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\smoothness\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\smoothness\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\smoothness\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\smoothness\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\smoothness\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\smoothness\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\smoothness\jquery-ui-1.10.3.custom.css" />
+    <Content Include="Content\smoothness\jquery-ui-1.10.3.custom.min.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -280,6 +301,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Images\Body-skin.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -341,6 +363,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\Shared\ChangeCultureControl.cshtml" />
+    <Content Include="Views\EmailTemplates\RegistrationConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -368,13 +391,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>HomeResourses.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resourses\Shared\_Layout.resx">
+    <EmbeddedResource Include="Resourses\Shared\_LayoutResourses.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>_Layout.Designer.cs</LastGenOutput>
+      <LastGenOutput>_LayoutResourses.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resourses\Shared\_Layout.ru.resx">
+    <EmbeddedResource Include="Resourses\Shared\_LayoutResourses.ru.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>_Layout.ru.Designer.cs</LastGenOutput>
+      <LastGenOutput>_LayoutResourses.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

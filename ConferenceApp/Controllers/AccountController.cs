@@ -14,6 +14,7 @@ using Model.Models;
 using Model;
 using Core.Services;
 using Core.Security;
+using ConferenceApp.Infrastructure;
 
 namespace ConferenceApp.Controllers
 {
@@ -22,11 +23,13 @@ namespace ConferenceApp.Controllers
     {
         private IUserService _userService;
         private ICryptographyService _cryptographyService;
+        private IEmailService _emailService;
 
-        public AccountController(IUserService userService, ICryptographyService cryptographyService)
+        public AccountController(IUserService userService, ICryptographyService cryptographyService, IEmailService emailService)
         {
             _userService = userService;
             _cryptographyService = cryptographyService;
+            _emailService = emailService;
         }
         //
         // GET: /Account/Login
@@ -115,28 +118,22 @@ namespace ConferenceApp.Controllers
 
             _userService.Create(user);
 
-            // send email with cinfirmation and activation link
-
-            //if (ModelState.IsValid)
-            //{
-            //    // Attempt to register the user
-            //    try
-            //    {
-            //        WebSecurity.CreateUserAndAccount(model.FirstName, model.Password, 
-            //            new { FirstName = model.FirstName,MiddleName=model.MiddleName, LastName = model.LastName,
-            //                DateOfBirth = model.DateOfBirth, Email = model.Email, PhoneNumber = model.PhoneNumber,
-            //                Comment = model.Comment, IsAdministrator=false });
-            //        WebSecurity.Login(model.FirstName, model.Password);
-            //        return RedirectToAction("Index", "Home");
-            //    }
-            //    catch (MembershipCreateUserException e)
-            //    {
-            //        ModelState.AddModelError("", ErrorCodeToString(e.StatusCode));
-            //    }
-            //}
-
+            SendRegistrationConfirmationEmail(user);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        void SendRegistrationConfirmationEmail(User user)
+        {
+            var model = new RegistrationConfirmationModel { ActivationToken = user.ActivationToken.ToString(), Email = user.Email };
+            var emailDesc = new EmailDescription
+            {
+                Subject = "You have successfully registered",
+                To = user.Email,
+                Body = Helper.GetEmailBody(Mail.RegistrationConfirmation, model)
+            };
+
+            _emailService.SendMessage(emailDesc);
         }
 
         void ValidateRegisterModel(RegisterModel model)

@@ -5,44 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Net;
-using RazorEngine;
 using System.Configuration;
 using System.Net.Mail;
-using Core.Services.Email;
 
 namespace Core.Services
 {
-    public class EmailDescription
-    {
-        public string From { get; set; }
-        public string To { get; set; }
-        public string CC { get; set; }
-        public string Subject { get; set; }
-        public string ReplyTo { get; set; }
-    }
-
-    public enum Mail
-    {
-        RequestResetPassword,
-        RequestApproveTimesheet,
-        RequestApproveRatings,
-        RequestAdminApproveRatings,
-    }
-
     public class EmailService: IEmailService
     {
-        static string physicalApplicationPath = HostingEnvironment.ApplicationPhysicalPath;
-
-        public void SendEmail(Mail emailName, object model, EmailDescription desc)
-        {
-            var templatePath = physicalApplicationPath + @"Service\Email\EmailTemplates\" + emailName + ".cshtml";
-            var template = System.IO.File.ReadAllText(templatePath, System.Text.Encoding.Default);
-            var body = Razor.Parse(template, model);
-
-            SendMessage(desc.To, desc.CC, desc.Subject, body);
-        }
-
-        void SendMessage(string to, string cc, string subject, string message)
+        public void SendMessage(EmailDescription desc)
         {
             // following values come from Web.Config file.
             string username = ConfigurationManager.AppSettings["emailUserName"].ToString();
@@ -54,13 +24,13 @@ namespace Core.Services
             bool enableSsl = false;
             bool haveSSL = bool.TryParse(ConfigurationManager.AppSettings["smtpSSL"] ?? "".ToString(), out enableSsl);
 
-            MailMessage mm = new MailMessage(from, to, subject, message);
+            MailMessage mm = new MailMessage(from, desc.To, desc.Subject, desc.Body);
 
             mm.IsBodyHtml = true;
 
-            if (!String.IsNullOrEmpty(cc))
+            if (!String.IsNullOrEmpty(desc.CC))
             {
-                mm.CC.Add(cc);
+                mm.CC.Add(desc.CC);
             }
 
             NetworkCredential credentials = new NetworkCredential(username, password);
@@ -80,12 +50,21 @@ namespace Core.Services
 
         /// <summary>
         /// gets host address prefix from web.config file.
-        /// such as "http://www.vbrs.co.nz"
         /// </summary>
         /// <returns></returns>
         public string GetHostAddress()
         {
             return ConfigurationManager.AppSettings["hostAddress"].ToString();
         }
+    }
+
+    public class EmailDescription
+    {
+        public string From { get; set; }
+        public string To { get; set; }
+        public string CC { get; set; }
+        public string Subject { get; set; }
+        public string ReplyTo { get; set; }
+        public string Body { get; set; }
     }
 }

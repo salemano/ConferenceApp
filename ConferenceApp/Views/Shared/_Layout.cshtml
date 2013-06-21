@@ -1,53 +1,58 @@
-﻿
+﻿<!DOCTYPE html>
 @using ConferenceApp.Resourses.Shared
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>@_Layout.Title - My ASP.NET MVC Application</title>
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@_LayoutResourses.Title - My ASP.NET MVC Application</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
         @Scripts.Render("~/bundles/jquery")
         <script src="~/Scripts/Common.js"></script>
         <script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
-    </head>
-    <body>
-        <header>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
-                </div>
-                <div class="float-right">
-                    <section id="login">
-                        @Html.ActionLink(_Layout.Language, "ChangeCulture")
-                        @Html.Partial("_LoginPartial")
-                    </section>
-                    <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink(_Layout.Home, "Index", "Home")</li>
-                            <li>@Html.ActionLink(_Layout.About, "About", "Home")</li>
-                            <li>@Html.ActionLink(_Layout.Contact, "Contact", "Home")</li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </header>
-        <div id="body">
-            @RenderSection("featured", required: false)
-            <section class="content-wrapper main-content clear-fix">
-                @RenderBody()
-            </section>
+        <link rel="stylesheet" href="~/Content/smoothness/jquery-ui-1.10.3.custom.css" />
+</head>
+<body style="padding-left:10%;padding-right:10%;padding-top:50px; background-image:url(Images/Body-skin.png);">
+    <header style="display:block;">
+        <div style="width:33%;text-align:center; float:left; display:inline-block;">
+            @Html.ActionLink(_LayoutResourses.Language, "ChangeCulture")
         </div>
-        <footer>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
-                </div>
+        <div style="width:33%; text-align:center; display:inline-block;">
+             <input type="text" value="Search" />
+        </div>
+        <div style="width:33%;text-align:center; float:right; display:inline-block;">
+            @Html.Partial("_LoginPartial")
+        </div>
+    </header>
+    <div id="body">
+            @RenderSection("featured", required: false)
+            @RenderBody()
+        @*It's for log on page*@
+        @*<div id="title">
+            <div style="display:inline-block; width:30%; text-align:center;">
+                <p class="site-title">@Html.ActionLink("LOGIN", "Index", "Home")</p>
             </div>
-        </footer>
-
-        @RenderSection("scripts", required: false)
-    </body>
+            <div style="display:inline-block; width:30%; text-align:center;float:right;">
+                Empty
+            </div>
+        </div>
+        <div id="body-content" style="position:static;width:30%; float:initial;
+            padding-left:30%;padding-right:30%;text-align:right;">
+            <p>Email <input type="text"/></p>
+            <p>Password <input type="text"/></p>
+            <p><input type="button" value="my Button"/></p>
+        </div>*@
+    </div>
+    <footer>
+        <div id="footer" style="text-align:left;display:inline-block;">
+            <p>
+                @Html.ActionLink(_LayoutResourses.Home, "Index", "Home")
+                @Html.ActionLink(_LayoutResourses.About, "About", "Home")
+                @Html.ActionLink(_LayoutResourses.Contact, "Contact", "Home")
+            </p>
+        </div>
+    </footer>
+    @RenderSection("scripts", required: false)
+</body>
 </html>

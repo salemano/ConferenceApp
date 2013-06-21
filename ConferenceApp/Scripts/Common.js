@@ -1,6 +1,5 @@
 ﻿
 $(function () {
-
     $('.datetime-picker').datepicker();
 });
 

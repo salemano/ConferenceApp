@@ -35,6 +35,11 @@ namespace Core.Services
             return user;
         }
 
+        public void SendRegistrationConfirmationEmail(User user)
+        {
+
+        }
+
         //public UserSignInValidationResult ValidateUser(string email, string password, bool onlyCurrentCompetition)
         //{
         //    var result = new UserSignInValidationResult { UserCompetitionType = null };

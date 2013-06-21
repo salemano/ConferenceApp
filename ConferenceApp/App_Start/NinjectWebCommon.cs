@@ -61,6 +61,7 @@ namespace ConferenceApp.App_Start
             kernel.Bind<ConferenceContext>().ToSelf().InRequestScope().WithConstructorArgument("connectionString", config); 
             kernel.Bind<IUserService>().To<UserService>().InRequestScope();
             kernel.Bind<ICryptographyService>().To<CryptographyService>().InRequestScope();
+            kernel.Bind<IEmailService>().To<EmailService>().InRequestScope();
         }        
     }
 }
