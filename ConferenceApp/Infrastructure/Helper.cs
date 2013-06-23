@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Hosting;
@@ -18,10 +19,23 @@ namespace ConferenceApp.Infrastructure
 
             return Razor.Parse(template, model);
         }
+
+        public static string GetHostAddress()
+        {
+            return ConfigurationManager.AppSettings["hostAddress"].ToString();
+        }
     }
 
     public enum Mail
     {
-        RegistrationConfirmation
+        RegistrationConfirmation,
+        RequestResetPassword
+    }
+
+    public enum UserValidationResult
+    {
+        InvalidUser,
+        NotActivated,
+        PasswordMismatch
     }
 }

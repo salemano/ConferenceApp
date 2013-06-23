@@ -11,7 +11,7 @@ namespace Model.Models
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int UserId { get; set; }
+        public int Id { get; set; }
 
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -33,22 +33,19 @@ namespace Model.Models
         public Guid? PasswordRecoveryToken { get; set; }
 
         public bool IsAdministrator { get; set; }
+                                                                                 
+        [NotMapped]
+        public string FullName
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(FirstName) && string.IsNullOrWhiteSpace(LastName))
+                    return Email;
+
+                return string.Format("{0} {1}", FirstName, LastName);
+            }
+        }
     }
-
-    //public class Session
-    //{
-    //    public int Id { get; set; }
-    //    public string Subject { get; set; }
-    //    public int TypeId { get; set; }
-    //    public string Address { get; set; }
-    //    public string Notes { get; set; }
-
-    //    public bool? IsConfirmed { get; set; }
-    //    public DateTime Start { get; set; }
-    //    public DateTime End { get; set; }
-
-    //    public DateTime RegistrationClosedAt { get; set; }
-    //}
 
     //public class SessionCreateRequest
     //{

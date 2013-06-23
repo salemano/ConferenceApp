@@ -17,6 +17,26 @@ namespace Core.Services
             _context = context;
         }
 
+        public IQueryable<User> GetAll()
+        {
+            return _context.Users;
+        }
+
+        public User GetById(int id)
+        {
+            return _context.Users.FirstOrDefault(u => u.Id == id);
+        }
+
+        public User GetByUsername(string userName)
+        {
+            return _context.Users.FirstOrDefault(u => u.Email == userName);
+        }
+
+        public void Update(User user)
+        {
+            _context.SaveChanges();
+        }
+
         public void SignIn(String userName, bool stayLoggedIn)
         {
             FormsAuthentication.SetAuthCookie(userName, stayLoggedIn);
@@ -33,11 +53,6 @@ namespace Core.Services
             _context.SaveChanges();
 
             return user;
-        }
-
-        public void SendRegistrationConfirmationEmail(User user)
-        {
-
         }
 
         //public UserSignInValidationResult ValidateUser(string email, string password, bool onlyCurrentCompetition)

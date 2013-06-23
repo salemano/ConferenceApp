@@ -20,6 +20,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -194,6 +196,7 @@
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\EntityFrameworkMigrations.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -206,6 +209,7 @@
     </Compile>
     <Compile Include="Infrastructure\CustomRoleProvider.cs" />
     <Compile Include="Infrastructure\Helper.cs" />
+    <Compile Include="Infrastructure\StatusMessageExtensions.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\EmailModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -219,34 +223,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HomeResourses.ru.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resourses\Shared\_LayoutResourses.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>_LayoutResourses.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resourses\Shared\_LayoutResourses.ru.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>_LayoutResourses.ru.resx</DependentUpon>
-    </Compile>
+    <Compile Include="Resourses\Shared\_LayoutResourses.Designer.cs" />
+    <Compile Include="Resourses\Shared\_LayoutResourses.ru.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\smoothness\images\animated-overlay.gif" />
-    <Content Include="Content\smoothness\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\smoothness\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\smoothness\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\smoothness\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Content\smoothness\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Content\smoothness\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Content\smoothness\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Content\smoothness\images\ui-bg_glass_100_fdf5ce_1x400.png" />
     <Content Include="Content\smoothness\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\smoothness\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\smoothness\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\smoothness\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\smoothness\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\smoothness\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Content\smoothness\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Content\smoothness\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
     <Content Include="Content\smoothness\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\smoothness\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\smoothness\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\smoothness\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\smoothness\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\smoothness\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Content\smoothness\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Content\smoothness\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Content\smoothness\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Content\smoothness\jquery-ui-1.10.3.custom.css" />
     <Content Include="Content\smoothness\jquery-ui-1.10.3.custom.min.css" />
+    <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -269,12 +267,16 @@
     <Content Include="Content\themes\base\jquery.ui.core.css" />
     <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
     <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.menu.css" />
     <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
     <Content Include="Content\themes\base\jquery.ui.resizable.css" />
     <Content Include="Content\themes\base\jquery.ui.selectable.css" />
     <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.spinner.css" />
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\jquery.ui.tooltip.css" />
+    <Content Include="Content\themes\base\minified\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -295,24 +297,30 @@
     <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.menu.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.spinner.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
     <Content Include="Images\Body-skin.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Images\page-bg.jpg" />
+    <Content Include="Images\page-bg.png" />
     <Content Include="Scripts\Common.js" />
-    <Content Include="Scripts\jquery-1.8.2.js" />
-    <Content Include="Scripts\jquery-1.8.2.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery-ui-1.8.24.js" />
-    <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <None Include="Scripts\jquery-2.0.2.intellisense.js" />
+    <Content Include="Scripts\jquery-2.0.2.js" />
+    <Content Include="Scripts\jquery-2.0.2.min.js" />
+    <Content Include="Scripts\jquery-2.0.2.min.map" />
+    <Content Include="Scripts\jquery-ui-1.10.3.js" />
+    <Content Include="Scripts\jquery-ui-1.10.3.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -361,9 +369,12 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\Shared\ChangeCultureControl.cshtml" />
     <Content Include="Views\EmailTemplates\RegistrationConfirmation.cshtml" />
+    <Content Include="Views\Shared\StatusMessage.cshtml" />
+    <Content Include="Views\EmailTemplates\RequestResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\EditProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -391,14 +402,8 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>HomeResourses.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resourses\Shared\_LayoutResourses.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>_LayoutResourses.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resourses\Shared\_LayoutResourses.ru.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>_LayoutResourses.ru.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Resourses\Shared\_LayoutResourses.resx" />
+    <EmbeddedResource Include="Resourses\Shared\_LayoutResourses.ru.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -428,6 +433,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

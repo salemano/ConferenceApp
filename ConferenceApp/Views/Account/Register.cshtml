@@ -36,7 +36,7 @@
             </li>
             <li>
                 @Html.LabelFor(m => m.DateOfBirth)
-                @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "datetime-picker" })
+                @Html.TextBox("StartDate", String.Format("{0:dd-MM-yyyy}", Model.DateOfBirth), new { @class = "datepicker", @id = "start-date" })
                 @Html.ValidationMessageFor(m => m.DateOfBirth)
             </li>
             <li>

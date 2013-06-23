@@ -9,5 +9,6 @@ namespace Core.Services
     public interface IEmailService
     {
         void SendMessage(EmailDescription desc);
+        void WriteMessageToFile(EmailDescription desc);
     }
 }

@@ -1,4 +1,7 @@
 @using ConferenceApp.Models;
+@using ConferenceApp.Infrastructure;
+
 @model RegistrationConfirmationModel
 
-Click here to confirm your registration @Model.ActivationToken
+Click here to confirm your registration
+<a class="approvestyle" href='@Helper.GetHostAddress()/Account/Activate/?token=@Model.ActivationToken'>Activate</a>

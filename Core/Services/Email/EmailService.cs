@@ -7,13 +7,30 @@ using System.Web.Hosting;
 using System.Net;
 using System.Configuration;
 using System.Net.Mail;
+using System.IO;
 
 namespace Core.Services
 {
     public class EmailService: IEmailService
     {
+        public void WriteMessageToFile(EmailDescription desc)
+        {
+            var path = @"c:\\ConferenceAppEmails";
+
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+            var timeStamp = string.Format("{0:yyyy-MM-dd_hh-mm-ss-tt}.txt", DateTime.Now);
+            using (var writetext = new StreamWriter(string.Format(@"{0}\{1}_{2}_{3}.txt", path, desc.Subject, desc.To, timeStamp)))
+            {
+                writetext.Write(desc.Body);
+            }
+        }
+
         public void SendMessage(EmailDescription desc)
         {
+            WriteMessageToFile(desc);
+            return;
+
             // following values come from Web.Config file.
             string username = ConfigurationManager.AppSettings["emailUserName"].ToString();
             string password = ConfigurationManager.AppSettings["emailPassword"].ToString();
@@ -21,7 +38,8 @@ namespace Core.Services
             string host = ConfigurationManager.AppSettings["smtpHost"].ToString();
             int port = 0;
             bool havePort = int.TryParse(ConfigurationManager.AppSettings["smtpPort"] ?? "".ToString(), out port);
-            bool enableSsl = false;
+            bool enableSsl = true;
+            
             bool haveSSL = bool.TryParse(ConfigurationManager.AppSettings["smtpSSL"] ?? "".ToString(), out enableSsl);
 
             MailMessage mm = new MailMessage(from, desc.To, desc.Subject, desc.Body);
@@ -35,7 +53,8 @@ namespace Core.Services
 
             NetworkCredential credentials = new NetworkCredential(username, password);
             SmtpClient sc = havePort ? new SmtpClient(host) : new SmtpClient(host, port);
-            sc.EnableSsl = haveSSL ? enableSsl : false;
+            sc.EnableSsl = true ;//sc.EnableSsl = haveSSL ? enableSsl : false;
+            sc.UseDefaultCredentials = false;
             sc.Credentials = credentials;
 
             try

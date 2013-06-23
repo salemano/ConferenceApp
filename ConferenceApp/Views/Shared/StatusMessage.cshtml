@@ -1,0 +1,11 @@
+﻿@{
+	var status = (string)TempData["StatusMessage"];
+	var statusType = (string)TempData["StatusMessageType"];
+	
+	if (status != null)
+	{	
+		<div id="status-message" class="@statusType">
+			@status
+		</div>
+	}
+}

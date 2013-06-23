@@ -5,23 +5,24 @@ using System.Linq;
 using System.Text;
 using Model.Models;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Data.Entity.Migrations;
 
 namespace Model
 {
     public class ConferenceContext : DbContext
     {
-        static ConferenceContext()
+        public ConferenceContext()
         {
-            Database.SetInitializer<ConferenceContext>(null);
+            Configuration.LazyLoadingEnabled = false;
         }
 
-        public ConferenceContext() { }
-
-        public ConferenceContext(string connectionString)
-            : base(connectionString)
+        public ConferenceContext(string connectionstring)
+            : base(connectionstring)
         {
+            Configuration.LazyLoadingEnabled = false;
         }
 
-        public IDbSet<User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Session> Sessions { get; set; }
     }
 }

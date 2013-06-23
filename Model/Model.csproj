@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,31 +52,35 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBContext.cs" />
-    <Compile Include="Migrations\201306191226249_AddedUsersTable.cs" />
-    <Compile Include="Migrations\201306191226249_AddedUsersTable.Designer.cs">
-      <DependentUpon>201306191226249_AddedUsersTable.cs</DependentUpon>
+    <Compile Include="Migrations\201306220003203_InitialCreate.cs" />
+    <Compile Include="Migrations\201306220003203_InitialCreate.Designer.cs">
+      <DependentUpon>201306220003203_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201306200826255_UserTableUpdate.cs" />
-    <Compile Include="Migrations\201306200826255_UserTableUpdate.Designer.cs">
-      <DependentUpon>201306200826255_UserTableUpdate.cs</DependentUpon>
+    <Compile Include="Migrations\201306230854017_Added_Session_Table.cs" />
+    <Compile Include="Migrations\201306230854017_Added_Session_Table.Designer.cs">
+      <DependentUpon>201306230854017_Added_Session_Table.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Session.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201306191226249_AddedUsersTable.resx">
-      <DependentUpon>201306191226249_AddedUsersTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201306220003203_InitialCreate.resx">
+      <DependentUpon>201306220003203_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201306200826255_UserTableUpdate.resx">
-      <DependentUpon>201306200826255_UserTableUpdate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201306230854017_Added_Session_Table.resx">
+      <DependentUpon>201306230854017_Added_Session_Table.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

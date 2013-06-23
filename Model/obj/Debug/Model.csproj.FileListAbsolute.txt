@@ -4,8 +4,8 @@ C:\Assembla\practiceapp\Model\bin\Debug\Model.pdb
 C:\Assembla\practiceapp\Model\bin\Debug\EntityFramework.dll
 C:\Assembla\practiceapp\Model\bin\Debug\EntityFramework.xml
 C:\Assembla\practiceapp\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
-C:\Assembla\practiceapp\Model\obj\Debug\Model.Migrations.AddedUsersTable.resources
-C:\Assembla\practiceapp\Model\obj\Debug\Model.Migrations.UserTableUpdate.resources
 C:\Assembla\practiceapp\Model\obj\Debug\Model.csproj.GenerateResource.Cache
 C:\Assembla\practiceapp\Model\obj\Debug\Model.dll
 C:\Assembla\practiceapp\Model\obj\Debug\Model.pdb
+C:\Assembla\practiceapp\Model\obj\Debug\Model.Migrations.InitialCreate.resources
+C:\Assembla\practiceapp\Model\obj\Debug\Model.Migrations.Added_Session_Table.resources

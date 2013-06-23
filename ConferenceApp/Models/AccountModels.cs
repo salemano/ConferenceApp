@@ -8,40 +8,6 @@ using System.Web.Security;
 
 namespace ConferenceApp.Models
 {
-    //public class UsersContext : DbContext
-    //{
-    //    public UsersContext()
-    //        : base("UsersContextConnection")
-    //    {
-    //    }
-
-    //    public DbSet<UserProfile> UserProfiles { get; set; }
-    //}
-
-    //[Table("UserProfile")]
-    //public class UserProfile
-    //{
-    //    [Key]
-    //    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-    //    public int UserId { get; set; }
-    //    public string FirstName { get; set; }
-    //    public string LastName { get; set; }
-    //    public string ImageUrl { get; set; }
-    //    public DateTime DateOfBirth { get; set; }
-    //    public string Email { get; set; }
-    //    public int PhoneNumber { get; set; }
-    //    public string Comment { get; set; }
-    //}
-
-    public class RegisterExternalLoginModel
-    {
-        [Required]
-        [Display(Name = "User name")]
-        public string UserName { get; set; }
-
-        public string ExternalLoginData { get; set; }
-    }
-
     public class LocalPasswordModel
     {
         [Required]
@@ -132,10 +98,9 @@ namespace ConferenceApp.Models
         ////[DataType(DataType.ImageUrl)]
         //public int PhotoId { get; set; }
 
-        [Required]
         [Display(Name = "Date of birth")]
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public Nullable<DateTime> DateOfBirth { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.mm.yy}")]
+        public DateTime? DateOfBirth { get; set; }
 
         [Required]
         [Display(Name = "Email")]
@@ -162,10 +127,28 @@ namespace ConferenceApp.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class ExternalLogin
+    public class RequestPasswordResetModel
     {
-        public string Provider { get; set; }
-        public string ProviderDisplayName { get; set; }
-        public string ProviderUserId { get; set; }
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+    }
+
+    public class PasswordResetModel
+    {
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name="Password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+
+        public int MinimumPasswordLength { get; set; }
+        public int UserId { get; set; }
     }
 }

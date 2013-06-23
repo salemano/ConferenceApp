@@ -9,9 +9,10 @@
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
         @Scripts.Render("~/bundles/jquery")
-        <script src="~/Scripts/Common.js"></script>
-        <script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
+
+    <script src="~/Scripts/jquery-ui-1.10.3.min.js"></script>
         <link rel="stylesheet" href="~/Content/smoothness/jquery-ui-1.10.3.custom.css" />
+        <script src="~/Scripts/Common.js"></script>
 </head>
 <body style="padding-left:10%;padding-right:10%;padding-top:50px; background-image:url(Images/Body-skin.png);">
     <header style="display:block;">
@@ -26,6 +27,7 @@
         </div>
     </header>
     <div id="body">
+        	@Html.Partial("StatusMessage")
             @RenderSection("featured", required: false)
             @RenderBody()
         @*It's for log on page*@
