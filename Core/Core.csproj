@@ -57,6 +57,10 @@
     <Compile Include="Security\ICryptographyService.cs" />
     <Compile Include="Services\Email\EmailService.cs" />
     <Compile Include="Services\Email\IEmailService.cs" />
+    <Compile Include="Services\Sessions\ISessionService.cs" />
+    <Compile Include="Services\Sessions\SessionService.cs" />
+    <Compile Include="Services\Users\IImageService.cs" />
+    <Compile Include="Services\Users\ImageService.cs" />
     <Compile Include="Services\Users\IUserService.cs" />
     <Compile Include="Services\Users\UserService.cs" />
   </ItemGroup>

@@ -24,5 +24,7 @@ namespace Model
 
         public DbSet<User> Users { get; set; }
         public DbSet<Session> Sessions { get; set; }
+        public DbSet<FileData> FileData { get; set; }
+        public DbSet<Image> Images { get; set; }
     }
 }

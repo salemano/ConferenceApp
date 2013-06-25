@@ -13,15 +13,15 @@ namespace Model.Models
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Subject { get; set; }
-        //public int TypeId { get; set; }
-        public string Address { get; set; }
-        public string Notes { get; set; }
-
-        public bool? IsConfirmed { get; set; }
+        public int UserId { get; set; }
+        public string Title { get; set; }
+        //public int Logo { get; set; }
+        public string Overview { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public bool? IsAccepted { get; set; }
+        public string City { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-
         public DateTime RegistrationClosedAt { get; set; }
     }
 }

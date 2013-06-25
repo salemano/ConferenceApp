@@ -60,7 +60,24 @@
     <Compile Include="Migrations\201306230854017_Added_Session_Table.Designer.cs">
       <DependentUpon>201306230854017_Added_Session_Table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201306241057484_UpdatedSession.cs" />
+    <Compile Include="Migrations\201306241057484_UpdatedSession.Designer.cs">
+      <DependentUpon>201306241057484_UpdatedSession.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201306242113307_UpdatedSession1.cs" />
+    <Compile Include="Migrations\201306242113307_UpdatedSession1.Designer.cs">
+      <DependentUpon>201306242113307_UpdatedSession1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201306250921168_Added_FileData_Image.cs" />
+    <Compile Include="Migrations\201306250921168_Added_FileData_Image.Designer.cs">
+      <DependentUpon>201306250921168_Added_FileData_Image.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201306251029399_ImageNullableuploadedByUserId.cs" />
+    <Compile Include="Migrations\201306251029399_ImageNullableuploadedByUserId.Designer.cs">
+      <DependentUpon>201306251029399_ImageNullableuploadedByUserId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\File.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,6 +94,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201306230854017_Added_Session_Table.resx">
       <DependentUpon>201306230854017_Added_Session_Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306241057484_UpdatedSession.resx">
+      <DependentUpon>201306241057484_UpdatedSession.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306242113307_UpdatedSession1.resx">
+      <DependentUpon>201306242113307_UpdatedSession1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306250921168_Added_FileData_Image.resx">
+      <DependentUpon>201306250921168_Added_FileData_Image.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306251029399_ImageNullableuploadedByUserId.resx">
+      <DependentUpon>201306251029399_ImageNullableuploadedByUserId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

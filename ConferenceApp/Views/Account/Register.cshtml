@@ -8,7 +8,8 @@
     <h2>Create a new account.</h2>
 </hgroup>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "miltipart/form-data"}))
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
 
@@ -31,12 +32,26 @@
                 @Html.ValidationMessageFor(m => m.LastName)
             </li>
             <li>
-@*                @Html.LabelFor(m => m.PhotoId)
-                @Html.TextBoxFor(m => m.PhotoId)*@
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.PhotoId)
+                </div>
+                <div class="editor-field">
+                        <div>
+                            @if (@Model.PhotoId == null)
+                            { 
+                            @: No photo
+                            }
+                            else
+                            {
+                                <img src="@Model.PhotoThumbnail" />
+                            }
+                           </div>
+                           <div style="clear:left;"><input type="file" name="image"/></div>
+                </div>
             </li>
             <li>
                 @Html.LabelFor(m => m.DateOfBirth)
-                @Html.TextBox("StartDate", String.Format("{0:dd-MM-yyyy}", Model.DateOfBirth), new { @class = "datepicker", @id = "start-date" })
+                @Html.TextBox("DateOfBirth", String.Format("{0:dd-MM-yyyy}", Model.DateOfBirth), new { @class = "datepicker", @id = "start-date" })
                 @Html.ValidationMessageFor(m => m.DateOfBirth)
             </li>
             <li>

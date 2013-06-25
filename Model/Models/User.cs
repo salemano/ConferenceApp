@@ -17,7 +17,8 @@ namespace Model.Models
         public string MiddleName { get; set; }
         public string LastName { get; set; }
 
-        //public int PhotoId { get; set; }
+        [ForeignKey("Photo")]
+        public int? PhotoId { get; set; }
         public Nullable<DateTime> DateOfBirth { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
@@ -33,7 +34,11 @@ namespace Model.Models
         public Guid? PasswordRecoveryToken { get; set; }
 
         public bool IsAdministrator { get; set; }
-                                                                                 
+
+        public virtual Image Photo { get; set; }
+
+        public virtual ICollection<Image> Images { get; set; }
+                                                             
         [NotMapped]
         public string FullName
         {

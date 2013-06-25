@@ -14,19 +14,20 @@
         <link rel="stylesheet" href="~/Content/smoothness/jquery-ui-1.10.3.custom.css" />
         <script src="~/Scripts/Common.js"></script>
 </head>
-<body style="padding-left:10%;padding-right:10%;padding-top:50px; background-image:url(Images/Body-skin.png);">
-    <header style="display:block;">
-        <div style="width:33%;text-align:center; float:left; display:inline-block;">
+<body>
+    <div class="body-featured">
+    <header>
+        <div style="width:33%;text-align:center; float:left; display:inline-block; padding-top:10px;">
             @Html.ActionLink(_LayoutResourses.Language, "ChangeCulture")
         </div>
         <div style="width:33%; text-align:center; display:inline-block;">
              <input type="text" value="Search" />
         </div>
-        <div style="width:33%;text-align:center; float:right; display:inline-block;">
+        <div style="width:33%;text-align:center; float:right; display:inline-block; padding-top:10px;">
             @Html.Partial("_LoginPartial")
         </div>
     </header>
-    <div id="body">
+    <div class="body">
         	@Html.Partial("StatusMessage")
             @RenderSection("featured", required: false)
             @RenderBody()
@@ -52,9 +53,11 @@
                 @Html.ActionLink(_LayoutResourses.Home, "Index", "Home")
                 @Html.ActionLink(_LayoutResourses.About, "About", "Home")
                 @Html.ActionLink(_LayoutResourses.Contact, "Contact", "Home")
+                @Html.ActionLink("New Session", "CreateSession", "Session")
             </p>
         </div>
     </footer>
     @RenderSection("scripts", required: false)
+        </div>
 </body>
 </html>

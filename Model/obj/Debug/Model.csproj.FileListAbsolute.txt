@@ -9,3 +9,7 @@ C:\Assembla\practiceapp\Model\obj\Debug\Model.dll
 C:\Assembla\practiceapp\Model\obj\Debug\Model.pdb
 C:\Assembla\practiceapp\Model\obj\Debug\Model.Migrations.InitialCreate.resources
 C:\Assembla\practiceapp\Model\obj\Debug\Model.Migrations.Added_Session_Table.resources
+C:\Assembla\practiceapp\Model\obj\Debug\Model.Migrations.UpdatedSession.resources
+C:\Assembla\practiceapp\Model\obj\Debug\Model.Migrations.UpdatedSession1.resources
+C:\Assembla\practiceapp\Model\obj\Debug\Model.Migrations.Added_FileData_Image.resources
+C:\Assembla\practiceapp\Model\obj\Debug\Model.Migrations.ImageNullableuploadedByUserId.resources

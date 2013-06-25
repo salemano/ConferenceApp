@@ -1,19 +1,17 @@
-﻿@model Model.Models.User
+﻿@model ConferenceApp.Models.EditProfileModel
 
 @{
-    ViewBag.Title = "EditProfile";
+    ViewBag.Title = "Edit Profile";
 }
 
-<h2>EditProfile</h2>
+<h2>Edit Profile</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("EditProfile", "Account", FormMethod.Post, new { enctype = "multipart/form-data" })){
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>User</legend>
-
-        @Html.HiddenFor(model => model.Id)
+        <legend>User Details</legend>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.FirstName)
@@ -43,7 +41,7 @@
             @Html.LabelFor(model => model.DateOfBirth)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.DateOfBirth)
+            @Html.TextBox("DateOfBirth", String.Format("{0:dd-MM-yyyy}", Model.DateOfBirth), new { @class = "datepicker", @id = "start-date" })
             @Html.ValidationMessageFor(model => model.DateOfBirth)
         </div>
 
@@ -55,6 +53,23 @@
             @Html.ValidationMessageFor(model => model.Email)
         </div>
 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PhotoId)
+            @Html.HiddenFor(model=>model.PhotoId)
+        </div>
+        <div class="editor-field">
+                <div>
+                    @if (@Model.PhotoId == null)
+                    { 
+                    @: No photo
+                    }
+                    else
+                    {
+                        <img src="@Model.PhotoThumbnail" />
+                    }
+                   </div>
+                   <div style="clear:left;"><input type="file" name="image"/></div>
+        </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.PhoneNumber)
         </div>
@@ -71,71 +86,12 @@
             @Html.ValidationMessageFor(model => model.Comment)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ActivationToken)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ActivationToken)
-            @Html.ValidationMessageFor(model => model.ActivationToken)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ActivatedAt)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ActivatedAt)
-            @Html.ValidationMessageFor(model => model.ActivatedAt)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.RegisteredAt)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.RegisteredAt)
-            @Html.ValidationMessageFor(model => model.RegisteredAt)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Password)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Password)
-            @Html.ValidationMessageFor(model => model.Password)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.PasswordSalt)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.PasswordSalt)
-            @Html.ValidationMessageFor(model => model.PasswordSalt)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.PasswordRecoveryToken)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.PasswordRecoveryToken)
-            @Html.ValidationMessageFor(model => model.PasswordRecoveryToken)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsAdministrator)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.IsAdministrator)
-            @Html.ValidationMessageFor(model => model.IsAdministrator)
-        </div>
-
         <p>
             <input type="submit" value="Save" />
+            <a href="/Home/Index">Cancel</a>
         </p>
     </fieldset>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

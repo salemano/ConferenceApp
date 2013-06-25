@@ -15,6 +15,8 @@ using Model;
 using Core.Services;
 using Core.Security;
 using ConferenceApp.Infrastructure;
+using System.Text.RegularExpressions;
+using System.IO;
 
 namespace ConferenceApp.Controllers
 {
@@ -24,12 +26,14 @@ namespace ConferenceApp.Controllers
         private IUserService _userService;
         private ICryptographyService _cryptographyService;
         private IEmailService _emailService;
+        private IImageService _imageService { get; set; }
 
-        public AccountController(IUserService userService, ICryptographyService cryptographyService, IEmailService emailService)
+        public AccountController(IUserService userService, ICryptographyService cryptographyService, IEmailService emailService, IImageService imageService)
         {
             _userService = userService;
             _cryptographyService = cryptographyService;
             _emailService = emailService;
+            _imageService = imageService;
         }
         //
         // GET: /Account/Login
@@ -127,14 +131,28 @@ namespace ConferenceApp.Controllers
             return View(model);
         }
 
+        void PopulateEditRegisterViewModel(RegisterModel model)
+        {
+            if (model.PhotoId != null)
+                model.PhotoThumbnail = GetThumbnailUrl((byte[])_imageService.GetData(model.PhotoId.Value), "png", 120);
+            else model.PhotoThumbnail = null;
+        }
+
         //
         // POST: /Account/Register
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public ActionResult Register(RegisterModel model,HttpPostedFileBase image)
         {
+            if (image != null)
+            {
+                var photo = _imageService.AddImage(image.FileName, GetFileContent(image), _userService.CurrentUser.Id);
+                model.PhotoId = photo.Id;
+            }
+
+            PopulateEditRegisterViewModel(model);
+
             if (!ModelState.IsValid)
                 return View(model);
 
@@ -144,7 +162,6 @@ namespace ConferenceApp.Controllers
                 return View(model);
 
             var salt = _cryptographyService.GetRandomString(50, false, false);
-
             var user = new User
             {
                 FirstName = model.FirstName,
@@ -158,6 +175,7 @@ namespace ConferenceApp.Controllers
                 Password = _cryptographyService.EncryptPassword(model.Password + salt),
                 PasswordSalt = salt,
                 ActivationToken = Guid.NewGuid(),
+                PhotoId = model.PhotoId
             };
 
             _userService.Create(user);
@@ -209,7 +227,8 @@ namespace ConferenceApp.Controllers
             var user = _userService.GetAll().FirstOrDefault(u => u.ActivationToken == token);
 
             if (user == null)
-                return RedirectToAction("Index", "Home").WithErrorMessage(string.Format("Invalid token supplied"));
+                return RedirectToAction("Index", "Home")
+                    .WithErrorMessage(string.Format("Invalid token supplied"));
 
             user.ActivationToken = null;
             user.ActivatedAt = DateTime.Now;
@@ -219,7 +238,8 @@ namespace ConferenceApp.Controllers
             _userService.SignIn(user.Email, true);
             // display success message
 
-            return RedirectToAction("Index", "Home").WithSuccessMessage(string.Format("Your account have been successfully activated"));
+            return RedirectToAction("Index", "Home")
+                .WithSuccessMessage(string.Format("Your account have been successfully activated"));
         }
 
         [AllowAnonymous]
@@ -253,7 +273,8 @@ namespace ConferenceApp.Controllers
 
             SendRequestResetPasswordEmail(user);
 
-            return RedirectToAction("Index", "Home").WithSuccessMessage(string.Format("Email with reset password link has been sent. Please check your email."));
+            return RedirectToAction("Index", "Home")
+                .WithSuccessMessage(string.Format("Email with reset password link has been sent. Please check your email."));
         }
 
         [AllowAnonymous]
@@ -266,7 +287,8 @@ namespace ConferenceApp.Controllers
                 return View(new PasswordResetModel { UserId = user.Id });
             }
 
-            return RedirectToAction("Index", "Home").WithErrorMessage(string.Format("Invalid token supplied"));
+            return RedirectToAction("Index", "Home")
+                .WithErrorMessage(string.Format("Invalid token supplied"));
         }
 
         [HttpPost]
@@ -284,47 +306,125 @@ namespace ConferenceApp.Controllers
 
                 _userService.SignIn(user.Email, stayLoggedIn: true);
 
-                return RedirectToAction("Index", "Home").WithSuccessMessage(string.Format("You have successfully set password"));
+                return RedirectToAction("Index", "Home")
+                    .WithSuccessMessage(string.Format("You have successfully set password"));
             }
             return View(resetModel);
         }
 
         public ActionResult EditProfile()
         {
-            try
+            var user = _userService.CurrentUser;
+
+            var model = new EditProfileModel
             {
-            var name = User.Identity.Name;
-            //var record = (from p in context.Users
-            //              where p.FirstName == name
-            //              select p).First();
-            return View(name);
+                Comment = user.Comment,
+                DateOfBirth = user.DateOfBirth,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                MiddleName = user.MiddleName,
+                PhoneNumber = user.PhoneNumber,
+                PhotoId = user.PhotoId
+            };
+
+            PopulateEditProfileViewModel(model);
+
+            return View(model);
+        }
+
+        string GetThumbnailUrl(byte[] myImage, string fileType, int thumbHeight)
+        {
+            if (Regex.IsMatch(fileType, @"bmp|gif|png|tiff|jpe?g"))
+            {
+                byte[] arr;
+                try
+                {
+                    using (var ms = new MemoryStream())
+                    {
+
+                        System.Drawing.Image originalImage;
+                        using (var mst = new MemoryStream(myImage))
+                        {
+                            originalImage = System.Drawing.Image.FromStream(mst);
+                        }
+
+                        var thumbWidth = thumbHeight * (originalImage.Width / originalImage.Height);
+                        thumbWidth = thumbWidth == 0 ? 100 : thumbWidth;
+                        using (var thumbnail = originalImage.GetThumbnailImage(thumbWidth, thumbHeight, null, new IntPtr()))
+                        {
+                            thumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                            arr = ms.ToArray();
+                        }
+                    }
+                }
+                catch { return string.Empty; }
+
+                return string.Format("data:image/{0};base64,", fileType.Replace(".", "")) + Convert.ToBase64String(arr);
             }
-            catch
+            else
             {
-                return View();
+                return string.Empty;
             }
         }
 
         [HttpPost]
-        public ActionResult EditProfile(User model)
+        public ActionResult EditProfile(EditProfileModel model, HttpPostedFileBase image)
         {
-            try
+            var user = _userService.CurrentUser;
+
+            if (image != null)
             {
-                var name = User.Identity.Name;
-                    //(from p in context.Users
-                    //        where p.FirstName == name
-                    //        select p).First();
-                if (!ModelState.IsValid)
-                    throw new Exception();
-                UpdateModel(model);
-                //db.Entry(data).CurrentValues.SetValues(db.UserProfiles);
-                //context.SaveChanges();
+                var photo = _imageService.AddImage(image.FileName, GetFileContent(image), _userService.CurrentUser.Id);
+
+                user.PhotoId = photo.Id;
+                _userService.Update(user);
+            }
+
+            PopulateEditProfileViewModel(model);
+
+            ValidateEditProfileViewModel(model);
+
+            if (!ModelState.IsValid)
                 return View(model);
-            }
-            catch
-            {
-                return View();
-            }
+
+            user.Comment = model.Comment;
+            user.DateOfBirth = model.DateOfBirth;
+            user.Email = model.Email;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.MiddleName = model.MiddleName;
+            user.PhoneNumber = model.PhoneNumber;
+
+            _userService.Update(user);
+
+            return RedirectToAction("Index", "Home")
+                .WithSuccessMessage(string.Format("You have successfully updated your profile.")); ;
+        }
+
+        void PopulateEditProfileViewModel(EditProfileModel model)
+        {
+            var user = _userService.CurrentUser;
+
+            if (user.PhotoId != null)
+                model.PhotoThumbnail = GetThumbnailUrl((byte[])_imageService.GetData(user.PhotoId.Value), "png", 120);
+            else model.PhotoThumbnail = null;
+        }
+
+        void ValidateEditProfileViewModel(EditProfileModel model)
+        {
+            var user = _userService.GetByUsername(model.Email);
+
+            if (user != null && user.Id != _userService.CurrentUser.Id)
+                ModelState.AddModelError("Email", "User with such email address already exists in the system");
+        }
+
+        byte[] GetFileContent(HttpPostedFileBase image)
+        {
+            var imageData = new byte[image.ContentLength];
+            image.InputStream.Read(imageData, 0, image.ContentLength);
+
+            return imageData;
         }
 
         #region Helpers

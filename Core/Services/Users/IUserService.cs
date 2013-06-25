@@ -15,5 +15,6 @@ namespace Core.Services
         void Update(User user);
         void SignIn(String userName, bool stayLoggedIn);
         void SignOut();
+        User CurrentUser { get; }
     }
 }
