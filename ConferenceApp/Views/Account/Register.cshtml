@@ -3,12 +3,7 @@
     ViewBag.Title = "Register";
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Create a new account.</h2>
-</hgroup>
-
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "miltipart/form-data"}))
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
@@ -34,6 +29,7 @@
             <li>
                 <div class="editor-label">
                     @Html.LabelFor(model => model.PhotoId)
+                    @Html.HiddenFor(model=>model.PhotoId)
                 </div>
                 <div class="editor-field">
                         <div>
@@ -43,7 +39,7 @@
                             }
                             else
                             {
-                                <img src="@Model.PhotoThumbnail" />
+                                <img src="@Model.PhotoThumbnail" class="img-polaroid" />
                             }
                            </div>
                            <div style="clear:left;"><input type="file" name="image"/></div>
@@ -78,7 +74,8 @@
                 @Html.ValidationMessageFor(m => m.ConfirmPassword)
             </li>
         </ol>
-        <input type="submit" value="Register" />
+        <input type="submit" value="Register" class="btn btn-success" />
+        <a href="/Account/Login" class="btn btn-link">Cancel</a>
     </fieldset>
 }
 

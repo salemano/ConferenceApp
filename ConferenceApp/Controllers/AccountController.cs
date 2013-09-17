@@ -33,7 +33,7 @@ namespace ConferenceApp.Controllers
             _userService = userService;
             _cryptographyService = cryptographyService;
             _emailService = emailService;
-            _imageService = imageService;
+            _imageService = imageService; 
         }
         //
         // GET: /Account/Login
@@ -97,7 +97,7 @@ namespace ConferenceApp.Controllers
                     break;
                 case UserValidationResult.NotActivated:
                     errorMessage =
-                        "Your account is currently not activated, please visit your inbox to confirm your email address. If you have not received your confirmation email, please contact a Tau Ora staff member";
+                        "Your account is currently not activated, please visit your inbox to confirm your email address. If you have not received your confirmation email, please contact Administrator.";
                     break;
 
                 default:
@@ -119,7 +119,7 @@ namespace ConferenceApp.Controllers
         {
             _userService.SignOut();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //
@@ -135,7 +135,6 @@ namespace ConferenceApp.Controllers
         {
             if (model.PhotoId != null)
                 model.PhotoThumbnail = GetThumbnailUrl((byte[])_imageService.GetData(model.PhotoId.Value), "png", 120);
-            else model.PhotoThumbnail = null;
         }
 
         //
@@ -143,11 +142,11 @@ namespace ConferenceApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model,HttpPostedFileBase image)
+        public ActionResult Register(RegisterModel model, HttpPostedFileBase image)
         {
             if (image != null)
             {
-                var photo = _imageService.AddImage(image.FileName, GetFileContent(image), _userService.CurrentUser.Id);
+                var photo = _imageService.AddImage(image.FileName, GetFileContent(image), null);
                 model.PhotoId = photo.Id;
             }
 
@@ -175,7 +174,8 @@ namespace ConferenceApp.Controllers
                 Password = _cryptographyService.EncryptPassword(model.Password + salt),
                 PasswordSalt = salt,
                 ActivationToken = Guid.NewGuid(),
-                PhotoId = model.PhotoId
+                PhotoId = model.PhotoId,
+                RegisteredAt = DateTime.Now
             };
 
             _userService.Create(user);
@@ -204,7 +204,7 @@ namespace ConferenceApp.Controllers
             var model = new RequestResetPasswordModel {  ResetPasswordToken = user.PasswordRecoveryToken.ToString(), Email = user.Email, FullName = user.FullName };
             var emailDesc = new EmailDescription
             {
-                Subject = "Reset pas sword request",
+                Subject = "Reset password request",
                 To = user.Email,
                 Body = Helper.GetEmailBody(Mail.RequestResetPassword, model)
             };
@@ -242,17 +242,45 @@ namespace ConferenceApp.Controllers
                 .WithSuccessMessage(string.Format("Your account have been successfully activated"));
         }
 
+        [Authorize]
+        public ActionResult ChangePassword()
+        {
+            var vm = new ChangePasswordViewModel();
+
+            return View(vm);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordViewModel vm)
+        {
+            if (!ModelState.IsValid)
+                return View(vm);
+
+            var user = _userService.CurrentUser;
+            var result = ValidateUser(user.Email, vm.CurrentPassword);
+            if (result != null)
+            {
+                ModelState.AddModelError("CurrentPassword", "Provided current password is incorrect.");
+                return View(vm);
+            }
+
+            _userService.SetPassword(user.Id, vm.NewPassword);
+
+            return RedirectToAction("EditProfile", "Account").WithSuccessMessage("Password has been successfully updated.");
+        }
+
         [AllowAnonymous]
         public ActionResult RequestPasswordReset()
         {
-            var viewModel = new RequestPasswordResetModel { };
+            var viewModel = new RequestPasswordResetPageModel { };
 
             return View(viewModel);
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult RequestPasswordReset(RequestPasswordResetModel viewModel)
+        public ActionResult RequestPasswordReset(RequestPasswordResetPageModel viewModel)
         {
             var user = _userService.GetByUsername(viewModel.Email);
 
@@ -278,7 +306,7 @@ namespace ConferenceApp.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult ResetPassword(Guid token)
+        public ActionResult SetPassword(Guid token)
         {
             var user = _userService.GetAll().FirstOrDefault(u => u.PasswordRecoveryToken == token);
 
@@ -293,23 +321,24 @@ namespace ConferenceApp.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult ResetPassword(PasswordResetModel resetModel)
+        public ActionResult SetPassword(PasswordResetModel vm)
         {
             if (ModelState.IsValid)
             {
-                var user = _userService.GetAll().FirstOrDefault(u => u.Id == resetModel.UserId);
+                var user = _userService.GetAll().FirstOrDefault(u => u.Id == vm.UserId);
                 user.PasswordSalt = _cryptographyService.GetRandomString(50, false, false);
-                user.Password = _cryptographyService.EncryptPassword(resetModel.Password + user.PasswordSalt);
+                user.Password = _cryptographyService.EncryptPassword(vm.Password + user.PasswordSalt);
                 user.ActivationToken = null;
+                user.PasswordRecoveryToken = null;
 
                 _userService.Update(user);
 
                 _userService.SignIn(user.Email, stayLoggedIn: true);
 
-                return RedirectToAction("Index", "Home")
+                return RedirectToAction("List", "Session")
                     .WithSuccessMessage(string.Format("You have successfully set password"));
             }
-            return View(resetModel);
+            return View(vm);
         }
 
         public ActionResult EditProfile()
@@ -372,7 +401,7 @@ namespace ConferenceApp.Controllers
         public ActionResult EditProfile(EditProfileModel model, HttpPostedFileBase image)
         {
             var user = _userService.CurrentUser;
-
+            
             if (image != null)
             {
                 var photo = _imageService.AddImage(image.FileName, GetFileContent(image), _userService.CurrentUser.Id);
@@ -398,7 +427,9 @@ namespace ConferenceApp.Controllers
 
             _userService.Update(user);
 
-            return RedirectToAction("Index", "Home")
+            FormsAuthentication.SetAuthCookie(user.Email, true);
+
+            return RedirectToAction("List", "Session")
                 .WithSuccessMessage(string.Format("You have successfully updated your profile.")); ;
         }
 
@@ -408,7 +439,6 @@ namespace ConferenceApp.Controllers
 
             if (user.PhotoId != null)
                 model.PhotoThumbnail = GetThumbnailUrl((byte[])_imageService.GetData(user.PhotoId.Value), "png", 120);
-            else model.PhotoThumbnail = null;
         }
 
         void ValidateEditProfileViewModel(EditProfileModel model)

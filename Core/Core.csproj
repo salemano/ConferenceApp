@@ -24,6 +24,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -57,7 +58,10 @@
     <Compile Include="Security\ICryptographyService.cs" />
     <Compile Include="Services\Email\EmailService.cs" />
     <Compile Include="Services\Email\IEmailService.cs" />
+    <Compile Include="Services\Log\ILogger.cs" />
+    <Compile Include="Services\Log\Logger.cs" />
     <Compile Include="Services\Sessions\ISessionService.cs" />
+    <Compile Include="Services\Sessions\SessionPermissionModel.cs" />
     <Compile Include="Services\Sessions\SessionService.cs" />
     <Compile Include="Services\Users\IImageService.cs" />
     <Compile Include="Services\Users\ImageService.cs" />

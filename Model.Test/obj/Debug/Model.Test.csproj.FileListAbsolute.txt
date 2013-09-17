@@ -1,0 +1,10 @@
+C:\Assembla\practiceapp\Model.Test\bin\Debug\Model.Test.dll.config
+C:\Assembla\practiceapp\Model.Test\bin\Debug\Model.Test.dll
+C:\Assembla\practiceapp\Model.Test\bin\Debug\Model.Test.pdb
+C:\Assembla\practiceapp\Model.Test\bin\Debug\EntityFramework.dll
+C:\Assembla\practiceapp\Model.Test\bin\Debug\Model.dll
+C:\Assembla\practiceapp\Model.Test\bin\Debug\Model.pdb
+C:\Assembla\practiceapp\Model.Test\bin\Debug\EntityFramework.xml
+C:\Assembla\practiceapp\Model.Test\obj\Debug\Model.Test.csprojResolveAssemblyReference.cache
+C:\Assembla\practiceapp\Model.Test\obj\Debug\Model.Test.dll
+C:\Assembla\practiceapp\Model.Test\obj\Debug\Model.Test.pdb

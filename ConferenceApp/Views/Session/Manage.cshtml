@@ -1,0 +1,78 @@
+﻿@using Model.Models;
+@model MySessionListViewModel
+@{
+    ViewBag.Title = Localization.MySessions;
+}
+
+@(Html.Grid(Model.Sessions)
+.RowAttributes(row => new MvcContrib.Hash(@SessionId => row.Item.Id, @class=>row.Item.IsRegistered? "success":"none"))
+.Columns(c =>
+{
+   c.For(u => u.Title).Sortable(true);
+   c.For(u => u.Start).Format("{0:d}").Sortable(true);
+   c.For(u => u.End).Format("{0:d}").Sortable(true);
+   c.For(u => u.Type).Sortable(true);
+   c.For(u=> u.NumberOfRegistrants).Sortable(true);
+   c.Custom(@<div>
+                <div style="display:@(item.Status == SessionStatus.NotSubmitted?"inline": "none")">Not Submitted</div>
+                <div style="display:@(item.Status == SessionStatus.InProgress? "inline":"none")">In Progress</div>
+                <div style="display:@(item.Status == SessionStatus.Processed?"inline":"none")">
+                    <span>@(item.IsAccepted.HasValue?(item.IsAccepted.Value? string.Format("Accepted on {0}", @item.AdminSubmittedAt.Value.ToShortDateString()) : string.Format("Rejected on {0}", @item.AdminSubmittedAt.Value.ToShortDateString())):"")</span>
+                    <div style="display:@(item.IsAccepted == false? "inline": "none")">
+                        <div class="btn-group showDetails">
+                          <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+                         </div>
+                        <div class="details hidden">@item.RejectionReason</div>
+                    </div>
+                </div>
+             </div>);
+    
+   c.Custom(@<div class="btn-group">
+      <a class="btn btn-primary" href="#"><i class="icon-edit icon-white"></i></a>
+      <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="/Session/Edit/@item.Id"><i class="icon-pencil"></i> @Localization.Edit</a></li>
+        <li class="@(item.Status != SessionStatus.NotSubmitted?"hidden":"")"><a href="/Session/Delete/@item.Id" class="delete-session" users="@item.NumberOfRegistrants"><i class="icon-trash"></i> @Localization.Delete</a></li>  
+      </ul>
+    </div>
+   );     
+})
+.Attributes(@class=>"table table-hover table-bordered")
+.Sort(Model.SortOptions) 
+.Empty("No sessions to display"))
+
+@Html.Pager((IPagination)Model.Sessions)
+
+<script type="text/javascript">
+    $(function () {
+
+        $('.showDetails').click(function (event) {
+
+            var target = event.target;
+            var parent = $(target).parent().parent();
+            var details = $(parent).find('.details');
+            if (details == null)
+                return false;
+
+            $(details).toggleClass('hidden');
+
+            event.stopPropagation();
+
+            return false;
+        });
+
+        $('.delete-session').click(function (event) {
+            var target = event.target;
+            var usersCount = $(target).attr('users');
+            var message = "Are you sure you would like to Delete this session? ";
+            if (usersCount > 0) {
+                message += "</br>Session has " + usersCount + " registered users.";
+            }
+
+            var proceedToDelete = confirm(message);
+            if (!proceedToDelete) {
+                return false;
+            }
+        });
+    });
+</script>

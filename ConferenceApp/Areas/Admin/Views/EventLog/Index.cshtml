@@ -1,0 +1,21 @@
+﻿@model ConferenceApp.Areas.Admin.Models.EventLogViewModel
+@{
+    ViewBag.Title = "Event Log";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@(Html.Grid(Model.Logs).RowAttributes(row => new MvcContrib.Hash(@eventLogId => row.Item.Id)).Columns(c =>
+{
+   c.For(u => u.CreateDate).Sortable(true);
+   c.For(u => u.UserName).Sortable(true); 
+   c.For(u => u.IPAddress).Sortable(true);
+   c.For(u => u.LogType).Format("{0:d}").Sortable(true);
+   c.For(u => u.Message).Format("{0:d}").Sortable(true); 
+   c.For(u => u.ObjectId).Sortable(true);
+   c.For(u =>u.LogLevel).Sortable(true);
+   c.For(u => u.Detail.Substring(0, 100)).Sortable(true).Attributes(@class => "logdetails");     
+})
+.Attributes(@class=>"table table-hover table-bordered event-log")
+.Sort(Model.SortOptions).Empty("No Log to display"))
+
+@Html.Pager((IPagination)Model.Logs)

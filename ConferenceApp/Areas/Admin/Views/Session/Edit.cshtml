@@ -1,0 +1,26 @@
+﻿@using Model.Models;
+@using ConferenceApp.Models;
+
+@model EditSessionModel
+
+@{
+    ViewBag.Title = "Edit Session";
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+}
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+ @Html.Partial("_CreateOrEdit", Model)
+
+    <p>
+        @if(Model.Permissions.CanEdit){
+        <input type="submit" class="btn btn-success" value="Save" name="btnSubmit" />
+        }
+        @Html.ActionLink("Cancel","List", new {@area="Admin"}, new {@class="btn btn-link"})
+    </p>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,49 +1,140 @@
-﻿html {
-    background-color: white;
-    margin: 0,auto;
-    padding-left:10%;
-    padding-right:10%;
-}
-
-body {
-    width:80%;
-    padding-left:10%;
-    padding-right:10%;
-    padding-top:50px;
-    background-color: #fff;
-    font-size: 1em;
-    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
-}
-
-a {
-    color: #333;
-    outline: none;
-    padding-left: 3px;
-    padding-right: 3px;
-    text-decoration: underline;
-}
-
-    a:link, a:visited,
-    a:active, a:hover {
-        color: #333;
-    }
-
-    a:hover {
-        background-color: #c7d1d6;
-    }
-
-header
+﻿
+html
 {
-    border-radius:15px 15px 0 0;
-    background-color:#7ac0da;
-    border-bottom-style:groove;
-    text-align:center;
-    padding-left:10px;
-    padding-right:10px;
+	margin: 0;
+	padding: 0;
+	overflow-y: scroll;
 }
-footer, hgroup,
-nav, section {
-    display: block;
+
+body
+{
+	background-color: #f1f1f1;
+	font-size: 13px;
+	font-family:  "Lucida Grande", "Segoe UI", Arial, "Helvetica Neue" , Helvetica, Sans-Serif;
+	margin: 0;
+	padding: 0;
+	color: #555;
+}
+
+a
+{
+	color: #038bd2;   
+	outline: none;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+a:hover
+{
+	text-decoration: underline;
+}
+
+a:hover
+{
+	text-decoration: underline;   
+}
+
+.event-log td.logdetails {width: 100px;}
+/* COMMON LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+
+#header
+{
+	position: relative;
+	margin-bottom: 0px;
+	color:white;
+	padding: 0;
+	background-color: #333;
+}
+
+#header .header-inner
+{
+	position: relative;
+	width: 990px;
+	margin: 0px auto;
+	height: 120px;
+	padding: 10px 0px 0px 0px;
+}
+
+#header .client-name
+{
+	float: left;
+	font-size: 36px;
+	color: #fff;  
+	margin: 10px 0px 0px 0px;
+	text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+}
+
+#pageheader
+{
+	background-color: #E6E6E6;
+	border-bottom: 1px solid #dedede;
+}
+
+#pageheader .pageheader-inner
+{
+	margin: 0px auto;
+	width: 990px;
+	height: 40px;
+	padding: 20px 0px;
+}
+
+#pageheader h1
+{
+	float: left;
+	font-size: 36px;
+	font-weight: normal;
+	text-shadow: #FFF 1px 1px 2px;
+	margin: 0px;
+	padding: 0px;
+	color: #333;
+}
+
+#breadcrumb
+{
+	margin: 10px 0px;   
+}
+
+#breadcrumb .breadcrumb-inner
+{
+	width: 990px;
+	margin: 0px auto;
+}
+
+.page
+{
+	width: 990px;
+	margin: 0px auto;
+	margin-top: 20px;
+}
+
+.content
+{
+	padding: 20px;
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 5px;   
+}
+
+#footer
+{
+	color: #999;
+	padding: 20px 0;
+	margin: 20px 0px 0px 0px;
+	text-align: center;
+	line-height: normal;
+	font-size: .9em;
+	clear: both;
+}
+
+#footer > .footer-inner
+{
+	padding: 20px 0;
+	text-align: center;
+	line-height: normal;
+	border-top: 1px solid #ccc;
+	width: 990px;
+	margin: 0px auto;
 }
 
 mark {
@@ -103,50 +194,22 @@ h5, h6 {
 
 /* main layout
 ----------------------------------------------------------*/
-.content-wrapper {
+/*.content-wrapper {
     min-width: 1000px;
     padding-right:30px;
     padding-left:30px;
 }
 .body-featured {
-
+    border-radius:15px 15px 0 0;
     max-width:1200px;
     background-color: #efeeef;
     min-width:1000px;
-    background-image:url(Images/Body-skin.png);
+    /*background-image:url(Images/Body-skin.png);
     font-size: .85em;
-    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
-}
-#body {
-    background-color: #efeeef;
-    clear: both;
-    padding : 10px 10px 10px 10px;
-}
-
-    .main-content {
-        background: url("../Images/Body-skin.png") no-repeat;
-        padding-left: 10px;
-        padding-top: 30px;
-    }
-
-    .featured + .main-content {
-        background: url("../Images/heroAccent.png") no-repeat;
-    }
-
-header .content-wrapper {
-    padding-top: 20px; 
-}
-
-footer {
-    clear: both;
-    background-color: #e2e2e2;
-    font-size: .8em;
-    height: 100px;
+    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;*/
 }
 
 
-/* site title
-----------------------------------------------------------*/
 .site-title {
     color: #c8c8c8;
     font-family: Rockwell, Consolas, "Courier New", Courier, monospace;
@@ -172,7 +235,7 @@ footer {
 }
 
     #login a {
-        background-color: #d3dce0;
+        /*background-color: #d3dce0;*/
         margin-left: 10px;
         margin-right: 3px;
         padding: 2px 3px;
@@ -222,7 +285,7 @@ ul#menu {
             color: #333;
             text-decoration: none;
         }
-
+        
 
 /* page elements
 ----------------------------------------------------------*/
@@ -343,9 +406,9 @@ aside {
             padding: 2px 0 2px 20px;
         }
 
-.label {
+/*.label {
     font-weight: 700;
-}
+}*/
 
 /* login page */
 #loginForm {
@@ -433,7 +496,7 @@ fieldset {
             padding-bottom: 5px;
         }
 
-label {
+/*label {
     display: block;
     font-size: 1.2em;
     font-weight: 600;
@@ -487,34 +550,24 @@ textarea {
         font-size: 1em;
         padding: 4px;
         margin-right: 4px;
-    }
+    }*/
 
 /* info and errors */
-.message-info {
-    border: 1px solid;
-    clear: both;
-    padding: 10px 20px;
+#status-message
+{
+    height: 40px;
+    width: 600px;
+    color: white;
+    font-size: 1.2em;
+    font-weight: 600;
 }
-
-.message-error {
-    clear: both;
-    color: #e80c4d;
-    font-size: 1.1em;
-    font-weight: bold;
-    margin: 20px 0 10px 0;
-}
-
-.message-success {
-    color: #7ac0da;
-    font-size: 1.3em;
-    font-weight: bold;
-    margin: 20px 0 10px 0;
-}
-
 
 #status-message.success 
 {
-	background: url(/images/page-bg.png);    
+    background:#a7ce97; /* Old browsers */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#a7ce97), color-stop(100%, green)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #a7ce97 0%, green 100%); /* Chrome10+,Safari5.1+ */
+    background: -moz-linear-gradient(top, #a7ce97, #green);  
     border: 1px solid #a7ce97;
 }
 
@@ -572,7 +625,7 @@ input[type="checkbox"].input-validation-error {
 
 /* tables
 ----------------------------------------------------------*/
-table {
+/*table {
     border-collapse: collapse;
     border-spacing: 0;
     margin-top: 0.75em;
@@ -629,7 +682,7 @@ td {
 
 tr.pager td {
     padding: 0 0.25em 0 0;
-}
+}*/
 
 /* info and errors */
 .message-info {
@@ -825,3 +878,110 @@ tr.pager td {
             margin: 0;
         }
 }
+.custom
+{
+    position: absolute;
+    display: inline;
+    height: 40px;
+    width: 990px;
+    bottom: 0px;
+    left: 0px;
+    clear: both;
+}
+
+/* SUB NAV   
+----------------------------------------------------------*/
+
+ul#sub-nav
+{
+	margin: 20px 0px 20px 0px;
+	padding: 0px;   
+	list-style: none;
+	overflow: hidden;
+}
+
+ul#sub-nav li
+{
+	float: left;   
+	margin-right: 5px;
+}
+
+ul#sub-nav li a
+{
+	float: left;   
+	padding: 5px 15px;
+	background: #ccc;
+	color: #000;
+	border-radius: 20px;
+	text-decoration: none;
+}
+
+ul#sub-nav li.selected a
+{
+	background: #333;
+	color: #fff;
+}
+
+.details{ background-color:lightcoral; width:150px;min-height:40px;padding:10px; }
+.hidden{display:none;}
+
+/* session list */
+
+.list-container {
+    display:table;
+    width:100%;
+    padding-bottom:50px;
+}
+
+.list-header {
+    font-weight:bold;
+}
+
+.list-header.list-row > div {
+    padding:8px 10px;
+    background:#333!important;
+    color:#FFF;
+}
+
+.list-row {
+    display:table-row;
+    width:100%;
+}
+
+.list-row > div {
+    display:table-cell;
+    vertical-align:top;
+    padding:4px 10px 4px 10px;
+}
+
+.session-list .list-group {
+    display:table-row-group;
+}
+
+.session-list .list-group:nth-child(2n + 3) .list-row > div {
+    background-color:#F4F4F4;
+}
+
+.session-list .list-group > .list-row:nth-child(n+2) > .group-start
+{
+    text-indent:-9999px;
+}
+
+.session-list .list-group > .list-row:first-child > div {
+    padding-top:10px;
+}
+
+.session-list .list-group > .list-row:last-child > div {
+    padding-bottom:10px;
+}
+
+.session-list .list-group:hover .list-row > div {
+    background-color:#e7f0f6;
+    cursor:pointer;
+}
+
+.session-list .list-group:nth-child(n + 3) .list-row:first-child > div {
+       border-top:1px solid #CCC;
+}
+
+

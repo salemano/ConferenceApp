@@ -1,0 +1,40 @@
+﻿@using MvcContrib.UI.Grid;
+@using ConferenceApp.Areas.Admin.Models;
+
+@model SessionRequestsViewModel
+@{
+    ViewBag.Title = "Requests";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/SessionAdmin.js"></script>
+
+
+@(Html.Grid(Model.Sessions).RowAttributes(row => new MvcContrib.Hash(@SessionId => row.Item.SessionId)).Columns(c =>
+{
+   c.For(u => u.Title).Sortable(true);
+   c.For(u => u.Email).Sortable(true);
+   c.For(u => u.Start).Format("{0:d}").Sortable(true);
+   c.For(u => u.End).Format("{0:d}").Sortable(true);
+   c.For(u => u.RegistrationCloseAt).Format("{0:d}").Sortable(true);  
+   c.Custom(@<div>
+            <a href="Accept/@item.SessionId" class="accept-session btn btn-success"><i class=" icon-thumbs-up"></i> @Localization.Accept</a>
+            <a  href="Reject/@item.SessionId" class="reject-session btn btn-danger"><i class=" icon-thumbs-down"></i> @Localization.Reject</a>
+        </div>);
+   c.Custom(
+      @<div class="btn-group">
+      <a class="btn btn-primary" href="#"><i class="icon-edit icon-white"></i> Session</a>
+      <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+      <ul class="dropdown-menu">
+
+        <li><a href="Edit/@item.SessionId"><i class="icon-pencil"></i> @Localization.Edit</a></li>
+        <li><a href="Delete/@item.SessionId" class="delete-session"><i class="icon-trash"></i> @Localization.Delete</a></li>  
+      </ul>
+    </div>
+   ); 
+})
+.Attributes(@class=>"table table-hover table-bordered")
+.Sort(Model.SortOptions)
+.Empty("No sessions to display"))
+
+@Html.Pager((IPagination)Model.Sessions)

@@ -1,0 +1,17 @@
+﻿@using ConferenceApp.Resourses.Shared;
+@model IEnumerable<MenuItemViewModel>
+
+@if (Model.Any())
+{
+	<ul id="sub-nav">
+		@foreach (var menuItem in Model)
+		{
+			if (menuItem.Visible)
+			{
+				<li id="@menuItem.Id" class="@(menuItem.IsSelected ? "selected" : "")">
+					<a href="@Url.Content(menuItem.NavigateUrl)"><span>@menuItem.Text</span></a>
+				</li>
+			}
+		}
+	</ul>
+}

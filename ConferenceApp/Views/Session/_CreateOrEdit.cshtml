@@ -1,0 +1,116 @@
+﻿@model EditSessionModel
+
+<fieldset>
+    <legend>Session Details</legend>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Title)
+    </div>
+    <div class="editor-field">
+        @if (Model.Permissions.CanEdit)
+        {
+            @Html.TextBoxFor(model => model.Title)
+        }else{
+            @Html.TextBoxFor(model => model.Title, new { @readonly = true })        
+        }
+            @Html.ValidationMessageFor(model => model.Title)           
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.Overview)
+    </div>
+    <div class="editor-field">
+        @if (Model.Permissions.CanEdit)
+        {
+            @Html.TextBoxFor(model => model.Overview)
+        }else{
+            @Html.TextBoxFor(model => model.Overview, new { @readonly = true })        
+        }
+            @Html.ValidationMessageFor(model => model.Overview)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.SelectedTypeId)
+    </div>
+    <div class="editor-field">
+        @if (Model.Permissions.CanEdit)
+        {
+            @Html.DropDownListFor(model => model.SelectedTypeId, Model.Types)
+        }else{
+            @Html.DropDownListFor(model => model.SelectedTypeId, Model.Types, new { @disabled =true })        
+        }
+            @Html.ValidationMessageFor(model => model.SelectedTypeId)
+
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.City)
+    </div>
+    <div class="editor-field">
+        @if (Model.Permissions.CanEdit)
+        {
+            @Html.TextBoxFor(model => model.City)
+        }else {
+             @Html.TextBoxFor(model => model.City, new { @readonly = true })       
+        }
+            @Html.ValidationMessageFor(model => model.City)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.CreateStart)
+    </div>
+    <div class="editor-field">
+        @if (Model.Permissions.CanEdit)
+        {
+            @Html.EditorFor(model => model.CreateStart)
+            @Html.ValidationMessageFor(model => model.CreateStart)
+        }
+        else { 
+            @Html.Label(Model.CreateStart.Value.ToShortDateString())
+        }
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.CreateEnd)
+    </div>
+    <div class="editor-field">
+         @if (Model.Permissions.CanEdit)
+        {
+            @Html.EditorFor(model => model.CreateEnd)
+            @Html.ValidationMessageFor(model => model.CreateEnd)
+        }
+        else { 
+            @Html.Label(Model.CreateEnd.Value.ToShortDateString())
+        }
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.CreateRegistrationClosedAt)
+    </div>
+    <div class="editor-field">
+    @if (Model.Permissions.CanEdit)
+    {
+        @Html.EditorFor(model => model.CreateRegistrationClosedAt)
+        @Html.ValidationMessageFor(model => model.CreateRegistrationClosedAt)
+    }
+    else { 
+       @Html.Label(Model.CreateRegistrationClosedAt.Value.ToShortDateString())
+    }
+    </div>
+</fieldset>
+
+<div style="display:@(Model.Users.Any()?"inline":"none")">
+    <h4>Registrants</h4>
+    @(Html.Grid(Model.Users).RowAttributes(row => new MvcContrib.Hash(@SessionId => row.Item.UserId)).Columns(c =>
+    {
+        c.For(u => u.User.FullName).Sortable(true);
+        c.For(u => u.User.Email).Sortable(true);
+        c.For(u => u.RegistrationDate).Format("{0:d}").Sortable(true);
+        c.For(u => Html.ActionLink("Delete", "DeleteUserFromSession", "Session", new { userId = u.UserId, sessionId = u.SessionId, @area="" }, null)).Visible(Model.Permissions.CanEdit);    
+    })
+    .Attributes(@class => "table table-hover table-bordered"))
+</div>
+
+
+
+

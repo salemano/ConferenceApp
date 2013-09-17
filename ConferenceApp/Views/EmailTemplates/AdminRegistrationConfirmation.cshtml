@@ -1,0 +1,10 @@
+@using ConferenceApp.Models;
+@using ConferenceApp.Infrastructure;
+
+@model RegistrationConfirmationModel
+
+Dear @Model.FullName
+
+Admin has requested activation email for you, 
+Click here to confirm your registration
+<a class="approvestyle" href='@Helper.GetHostAddress()/Account/Activate/?token=@Model.ActivationToken'>Activate</a>

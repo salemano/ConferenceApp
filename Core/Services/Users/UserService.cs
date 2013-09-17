@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Security;
+using Core.Security;
 using Model;
 using Model.Models;
 
@@ -12,20 +13,27 @@ namespace Core.Services
     public class UserService: IUserService
     {
         private readonly ConferenceContext _context;
+        private ICryptographyService _cryptographyService;
         private User _currentUser;
-        public UserService(ConferenceContext context)
+
+        public UserService(ConferenceContext context, ICryptographyService cryptographyService)
         {
             _context = context;
+            _cryptographyService = cryptographyService;
         }
-
+        public void Delete(User user)
+        {
+            user.IsDeleted = true;
+            _context.SaveChanges();
+        }
         public IQueryable<User> GetAll()
         {
-            return _context.Users;
+            return from p in _context.Users where p.IsDeleted == false select p;
         }
 
         public User GetById(int id)
         {
-            return _context.Users.FirstOrDefault(u => u.Id == id);
+            return GetAll().FirstOrDefault(u => u.Id == id);
         }
 
         public User GetByUsername(string userName)
@@ -60,12 +68,19 @@ namespace Core.Services
             FormsAuthentication.SignOut();
         }
 
-        public User Create(User user)
+        public void Create(User user)
         {
             _context.Users.Add(user);
             _context.SaveChanges();
+        }
 
-            return user;
+        public void SetPassword(int id, string password)
+        {
+            var user = GetById(id);
+            var salt = _cryptographyService.GetRandomString(50, false, false);
+            user.Password = _cryptographyService.EncryptPassword(password + salt);
+
+            _context.SaveChanges();
         }
     }
 }

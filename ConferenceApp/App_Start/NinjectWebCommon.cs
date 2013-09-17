@@ -13,7 +13,6 @@ namespace ConferenceApp.App_Start
     using Model;
     using Ninject;
     using Ninject.Web.Common;
-    using Core.Services.Sessions;
 
     public static class NinjectWebCommon 
     {
@@ -65,6 +64,7 @@ namespace ConferenceApp.App_Start
             kernel.Bind<IEmailService>().To<EmailService>().InRequestScope();
             kernel.Bind<ISessionService>().To<SessionService>().InRequestScope();
             kernel.Bind<IImageService>().To<ImageService>().InRequestScope();
+            kernel.Bind<ILogger>().To<Logger>().InRequestScope();
         }        
     }
 }

@@ -1,0 +1,58 @@
+﻿@using ConferenceApp.Areas.Admin.Models
+
+@model RejectSessionViewModel
+
+<div class="form-horizontal" id="reject-session-section">
+@using (Ajax.BeginForm("Reject", null, new AjaxOptions
+{
+    InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
+    UpdateTargetId = "reject-session-section",
+    HttpMethod = "POST",
+    OnSuccess = "loadRejectSession(data)"
+}, new { @id = Model.SessionId })) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+<fieldset>
+    <legend>Reject Session </legend>
+
+    <div class="editor-label">
+        @Html.LabelFor(model=>model.SessionTitle)
+    </div>
+    <div class="editor-field">
+        @Html.Label(Model.SessionTitle)
+    </div>
+    <div class="editor-label">
+        @Html.LabelFor(model => model.RejectionReason)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.RejectionReason)
+        @Html.ValidationMessageFor(model => model.RejectionReason)           
+    </div>
+    @Html.HiddenFor(model => model.SessionId)
+    @Html.HiddenFor(model => model.SessionTitle)
+    <p>
+        <input type="submit" value="Reject" />
+        <a href="#" id="cancel-reject">Cancel</a>
+    </p>
+</fieldset>
+}
+</div>
+
+<script type="text/javascript">
+
+    $('#cancel-reject').click(function () {
+
+        hideFancybox();
+        return false;
+    });
+
+    function loadRejectSession(data) {
+
+        if (data == '') {
+            window.location.reload();
+            return;
+        }
+    }
+
+</script>

@@ -1,0 +1,32 @@
+﻿@model SessionViewModel
+
+<div class="row-fluid">
+    <div class="row-fluid">
+        <div class="span6">
+        @Model.Title
+        <div class="row-fluid">
+            <div class="span6">
+                @Html.LabelFor(m=>m.Start)
+                @Html.Label(Model.Start.ToShortDateString()))
+            </div>
+            <div class="span6">
+                @Html.LabelFor(m=>m.End)
+                @Html.Label(Model.End.ToShortDateString())
+            </div>
+        </div>
+        </div>
+        <div class="span6">
+            <div class="span6">Google maps come here</div>
+            <div class="span6">
+                @Html.LabelFor(m=>m.Address)
+                @Html.Label(Model.Address)
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        @Html.LabelFor(m=>m.Overview)
+        @Html.Label(Model.Overview)
+    </div>
+</div>
+
+@Html.HiddenFor(model=>model.Id)

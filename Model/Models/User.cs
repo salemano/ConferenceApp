@@ -38,7 +38,11 @@ namespace Model.Models
         public virtual Image Photo { get; set; }
 
         public virtual ICollection<Image> Images { get; set; }
-                                                             
+
+        public virtual ICollection<UsersInSessions> Sessions { get; set; }
+
+        public bool IsDeleted { get; set; }        
+                                             
         [NotMapped]
         public string FullName
         {
@@ -51,38 +55,4 @@ namespace Model.Models
             }
         }
     }
-
-    //public class SessionCreateRequest
-    //{
-    //    public int Id { get; set; }
-    //    public int SessionId { get; set; }
-    //    public DateTime CreatedAt { get; set; }
-    //    public bool? IsConfirmed { get; set; }
-    //    public string RejectionReason { get; set; }
-    //}
-
-    //public class SessionRegistrationRequest
-    //{
-    //    public int Id { get; set; }
-    //    public int UserId { get; set; }
-    //    public int SessionId { get; set; }
-    //    public DateTime CreatedAt { get; set; }
-    //    public bool IsAccepted { get; set; }
-    //    public string RejectionReason { get; set; }
-    //    public bool ProcessedAt { get; set; }
-    //}
-
-    //public class UsersInSessions
-    //{
-    //    public int Id { get; set; }
-    //    public int SessionId { get; set; }
-    //    public int UserId { get; set; }
-    //    public DateTime RegistrationDate { get; set; }
-    //}
-
-    //public class SessionType
-    //{
-    //    public int Id { get; set; }
-    //    public string Name { get; set; }
-    //}
 }

@@ -1,0 +1,20 @@
+﻿@using ConferenceApp.Resourses.Shared;
+@model IEnumerable<MenuItemViewModel>
+
+<div class="navbar">
+    <div class="navbar-inner custom">
+        <ul class="nav">
+	        @foreach (var menuItem in Model)
+	        {
+		        if (menuItem.Visible)
+		        {
+			        <li id="@menuItem.Id" class="@(menuItem.IsSelected ? "active" : "")">
+				        <a href="@Url.Content(menuItem.NavigateUrl)"><span>@menuItem.Text</span></a>
+			        </li>
+                    <li class="divider-vertical"></li>
+		        }
+	        }
+        </ul>
+    </div>
+</div>
+   

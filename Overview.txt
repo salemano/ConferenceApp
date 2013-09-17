@@ -1,0 +1,19 @@
+Conference Web-Site
+
+Supported functions:
+	1)Register user;(Confirmation link will be saved in .txt file here: C:\ConferenceAppEmails\)
+	2)Log in user;(Edit profile,upload foto)
+	3)Log Out user;
+	4)Register Session(will be displyed in 'My Sessions';
+	5)Display Sessions registered and submited by admin(Sessions);
+	6)Register on Session;
+	7)Display general info about registrants(in Session/Edit);
+	8)Manage users:Edit,Delete,make admin (for admin);
+	9a)Manage sessions:Edit,Delete(for admin);
+	9b)Session requests: accept or reject(with details message) session;
+Accounts:
+login: admin1@gmail.com
+passw: admin1
+
+login: ivan@gmail.com
+passw: ivan12

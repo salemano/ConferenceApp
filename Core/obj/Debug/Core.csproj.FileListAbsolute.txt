@@ -1,3 +1,13 @@
+C:\Users\Sergey\Downloads\root\Core\bin\Debug\Core.dll.config
+C:\Users\Sergey\Downloads\root\Core\bin\Debug\Core.dll
+C:\Users\Sergey\Downloads\root\Core\bin\Debug\Core.pdb
+C:\Users\Sergey\Downloads\root\Core\bin\Debug\EntityFramework.dll
+C:\Users\Sergey\Downloads\root\Core\bin\Debug\Model.dll
+C:\Users\Sergey\Downloads\root\Core\bin\Debug\Model.pdb
+C:\Users\Sergey\Downloads\root\Core\bin\Debug\EntityFramework.xml
+C:\Users\Sergey\Downloads\root\Core\obj\Debug\Core.csprojResolveAssemblyReference.cache
+C:\Users\Sergey\Downloads\root\Core\obj\Debug\Core.dll
+C:\Users\Sergey\Downloads\root\Core\obj\Debug\Core.pdb
 C:\Assembla\practiceapp\Core\bin\Debug\Core.dll.config
 C:\Assembla\practiceapp\Core\bin\Debug\Core.dll
 C:\Assembla\practiceapp\Core\bin\Debug\Core.pdb

@@ -24,12 +24,22 @@ namespace ConferenceApp.Infrastructure
         {
             return ConfigurationManager.AppSettings["hostAddress"].ToString();
         }
+
+        public static string GetCurrentUrl()
+        {
+            var request = HttpContext.Current.Request;
+            var querystring = HttpUtility.ParseQueryString(request.UrlReferrer.Query);
+
+            return request.UrlReferrer.AbsolutePath+ "?" + querystring.ToString();
+        }
     }
 
     public enum Mail
     {
         RegistrationConfirmation,
-        RequestResetPassword
+        RequestResetPassword,
+        AdminRegistrationConfirmation,
+        AdminRequestResetPassword
     }
 
     public enum UserValidationResult

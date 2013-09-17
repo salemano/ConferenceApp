@@ -5,35 +5,32 @@ using System.Web;
 using System.Web.Mvc;
 using Model;
 using ConferenceApp.Filters;
+using ConferenceApp.Infrastructure;
 
 namespace ConferenceApp.Controllers
 {
     [Localization]
+    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
-            //using (var db = new ConferenceContext())
-            //{
-            //    var users = db.Users;
-            //    db.SaveChanges();
-            //}
- 
-
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
-            return View();
+            return RedirectToAction("List", "Session");
         }
 
+        [AllowAnonymous]
         public ActionResult ChangeCulture()
         {
             if (Session["culture"] == null)
                 Session["culture"] = "en";
             else
                 Session["culture"] = (Session["culture"].ToString() == "ru")
-                    ? "en" : "ru";
+                    ? "en-GB" : "ru";
             var p = Session["culture"].ToString();
-            return RedirectToAction("Index");
+
+            var url = Helper.GetCurrentUrl();
+
+            return Redirect(url); 
         }
 
         public ActionResult About()

@@ -24,7 +24,15 @@ namespace Model
 
         public DbSet<User> Users { get; set; }
         public DbSet<Session> Sessions { get; set; }
+        public DbSet<UsersInSessions> UsersInSessions { get; set; }
         public DbSet<FileData> FileData { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<EventLog> EventLogs { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Session>().Property(x => x.Type).HasColumnType("int");
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

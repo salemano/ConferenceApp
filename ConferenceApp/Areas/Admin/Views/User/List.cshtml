@@ -1,0 +1,56 @@
+﻿@using ConferenceApp.Areas.Admin.Models
+@using MvcContrib.UI.Grid
+@using Model.Models
+@using ConferenceApp.Resourses.User
+
+@model UserListViewModel
+@{
+    ViewBag.Title = UserResourses.UserManagement;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("List", "User", FormMethod.Get, new { @class = "form-search" }))
+{
+    <div class="row-fluid">
+        <div class="span4">
+	        @Html.LabelFor(m => m.FilterText)
+	        @Html.TextBoxFor(m => m.FilterText, new { @class="input-medium search-query"})
+        </div>
+        <div class="span4">
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span4">
+        </div> 
+        <div class="span4">
+        </div>
+        <div class="span4">
+	        <input type="submit" class="btn btn-primary" value="@UserResourses.Search" />
+            <input type="reset" class="btn" value="@UserResourses.Clear" />
+        </div>
+    </div> 
+}
+@(Html.Grid(Model.Users).RowAttributes(row => new MvcContrib.Hash(@Id => row.Item.Id)).Columns(c =>
+{
+   c.For(u => u.Email).Sortable(true);
+   c.For(u => u.DateOfBirth).Format("{0:d}").Sortable(true);
+   c.For(u => u.ActivatedAt).Format("{0:d}").Sortable(true);
+   c.For(u => u.FirstName).Sortable(true);
+   c.Custom(
+      @<div class="btn-group">
+      <a class="btn btn-primary" href="#"><i class="icon-user icon-white"></i> User</a>
+      <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+      <ul class="dropdown-menu">
+
+        <li><a href="EditUser/@item.Id"><i class="icon-pencil"></i> @UserResourses.Edit</a></li>
+        <li><a href="RequestResetPasswordEmail/@item.Id"><i class="icon-envelope"></i> @UserResourses.SendResetPasswordLink</a></li>
+        <li style="display:@(item.ActivationToken==null?"none":"inline")"><a href="ResendActivationEmail/@item.Id"><i class="icon-retweet"></i> @UserResourses.SendActivationEmail</a></li>
+        <li><a href="Delete/@item.Id"><i class="icon-trash"></i> @UserResourses.Delete</a></li>
+        <li class="divider"></li>
+        <li><a href="MakeAdmin/@item.Id"><i class="icon-star"></i> Make admin</a></li>            
+      </ul>
+    </div>
+   ); 
+})
+.Attributes(@class=>"table table-hover table-bordered")
+.Sort(Model.SortOptions).Empty("No Users to display"))

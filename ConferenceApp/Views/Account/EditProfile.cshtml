@@ -4,15 +4,12 @@
     ViewBag.Title = "Edit Profile";
 }
 
-<h2>Edit Profile</h2>
-
 @using (Html.BeginForm("EditProfile", "Account", FormMethod.Post, new { enctype = "multipart/form-data" })){
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
     <fieldset>
         <legend>User Details</legend>
-
         <div class="editor-label">
             @Html.LabelFor(model => model.FirstName)
         </div>
@@ -41,7 +38,7 @@
             @Html.LabelFor(model => model.DateOfBirth)
         </div>
         <div class="editor-field">
-            @Html.TextBox("DateOfBirth", String.Format("{0:dd-MM-yyyy}", Model.DateOfBirth), new { @class = "datepicker", @id = "start-date" })
+            @Html.TextBox("DateOfBirth", String.Format("{0:dd-MM-yyyy}", Model.DateOfBirth), new { @class = "datepicker"})
             @Html.ValidationMessageFor(model => model.DateOfBirth)
         </div>
 
@@ -65,7 +62,7 @@
                     }
                     else
                     {
-                        <img src="@Model.PhotoThumbnail" />
+                        <img src="@Model.PhotoThumbnail" class="img-polaroid" />
                     }
                    </div>
                    <div style="clear:left;"><input type="file" name="image"/></div>
@@ -87,10 +84,12 @@
         </div>
 
         <p>
-            <input type="submit" value="Save" />
-            <a href="/Home/Index">Cancel</a>
+            <input type="submit" value="Save" class="btn btn-success" />
+            <a href="/Home/Index" class="btn btn-link">Cancel</a>
         </p>
     </fieldset>
+    
+    @Html.ActionLink("Change password", "ChangePassword", "Account", new { area = "" }, new { @class="btn btn-success"});
 }
 
 @section Scripts {

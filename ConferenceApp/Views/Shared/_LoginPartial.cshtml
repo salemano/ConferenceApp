@@ -1,15 +1,20 @@
-﻿@if (Request.IsAuthenticated) {
+﻿
+@if (Request.IsAuthenticated) {
     <text>
-        Hello, @Html.ActionLink(User.Identity.Name, "EditProfile", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "Manage" })!
-        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
+        Hello, @Html.ActionLink(User.Identity.Name, "EditProfile", "Account", routeValues: new { area=""}, htmlAttributes: new { @class = "username", title = "Manage"})!
+        @using (Html.BeginForm("LogOff", "Account", new {area=""}, FormMethod.Post, new { id = "logoutForm" })) {
             @Html.AntiForgeryToken()
-            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+            <a href="javascript:document.getElementById('logoutForm').submit()" class="">Log off</a>
         }
     </text>
+    @Html.ActionLink(Localization.Language, "ChangeCulture", "Home", routeValues: new { area = "" }, htmlAttributes: new { @class=""})
 } else {
     <div>
-    @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+    @Html.ActionLink("Register", "Register", "Account", routeValues: new { area = "" }, htmlAttributes: new { @class="" })
     |
-    @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    @Html.ActionLink("Log in", "Login", "Account", routeValues: new { area = "" }, htmlAttributes: new { @class=""})
+    |
+    @Html.ActionLink(Localization.Language, "ChangeCulture", "Home", routeValues: new { area = "" }, htmlAttributes: new { @class=""})
     </div>
 }
+

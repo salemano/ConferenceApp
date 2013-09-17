@@ -1,0 +1,24 @@
+﻿@using ConferenceApp.Models;
+
+@model EditSessionModel
+
+@{
+    ViewBag.Title = "Create Session";
+}
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    @Html.Partial("_CreateOrEdit", Model)
+
+    <p>
+        <input type="submit" value="Save" name="btnSubmit" class="btn btn-primary" />
+        <input type="submit" value="Submit" name="btnSubmit" class="btn btn-success"/>
+        <a href="/Session/List" class="btn btn-link">Cancel</a>
+    </p>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

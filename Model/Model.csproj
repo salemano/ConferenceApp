@@ -24,6 +24,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -76,7 +77,40 @@
     <Compile Include="Migrations\201306251029399_ImageNullableuploadedByUserId.Designer.cs">
       <DependentUpon>201306251029399_ImageNullableuploadedByUserId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201306280907343_AddedSessionType.cs" />
+    <Compile Include="Migrations\201306280907343_AddedSessionType.Designer.cs">
+      <DependentUpon>201306280907343_AddedSessionType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201306300929490_AddSubmittedDates.cs" />
+    <Compile Include="Migrations\201306300929490_AddSubmittedDates.Designer.cs">
+      <DependentUpon>201306300929490_AddSubmittedDates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201306300938010_AddedRejectionReasonToSession.cs" />
+    <Compile Include="Migrations\201306300938010_AddedRejectionReasonToSession.Designer.cs">
+      <DependentUpon>201306300938010_AddedRejectionReasonToSession.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201307011135528_AddedUsersInSessionTable.cs" />
+    <Compile Include="Migrations\201307011135528_AddedUsersInSessionTable.Designer.cs">
+      <DependentUpon>201307011135528_AddedUsersInSessionTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201307130704516_AddedIsDeletedToSession.cs" />
+    <Compile Include="Migrations\201307130704516_AddedIsDeletedToSession.Designer.cs">
+      <DependentUpon>201307130704516_AddedIsDeletedToSession.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201307141127296_AddedEventLogTable.cs" />
+    <Compile Include="Migrations\201307141127296_AddedEventLogTable.Designer.cs">
+      <DependentUpon>201307141127296_AddedEventLogTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201307170913098_AddedUserIsDeletedField.cs" />
+    <Compile Include="Migrations\201307170913098_AddedUserIsDeletedField.Designer.cs">
+      <DependentUpon>201307170913098_AddedUserIsDeletedField.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201307240955022_initialData.cs" />
+    <Compile Include="Migrations\201307240955022_initialData.Designer.cs">
+      <DependentUpon>201307240955022_initialData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\EventLog.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\Session.cs" />
     <Compile Include="Models\User.cs" />
@@ -106,6 +140,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201306251029399_ImageNullableuploadedByUserId.resx">
       <DependentUpon>201306251029399_ImageNullableuploadedByUserId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306280907343_AddedSessionType.resx">
+      <DependentUpon>201306280907343_AddedSessionType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306300929490_AddSubmittedDates.resx">
+      <DependentUpon>201306300929490_AddSubmittedDates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306300938010_AddedRejectionReasonToSession.resx">
+      <DependentUpon>201306300938010_AddedRejectionReasonToSession.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307011135528_AddedUsersInSessionTable.resx">
+      <DependentUpon>201307011135528_AddedUsersInSessionTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307130704516_AddedIsDeletedToSession.resx">
+      <DependentUpon>201307130704516_AddedIsDeletedToSession.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307141127296_AddedEventLogTable.resx">
+      <DependentUpon>201307141127296_AddedEventLogTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307170913098_AddedUserIsDeletedField.resx">
+      <DependentUpon>201307170913098_AddedUserIsDeletedField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307240955022_initialData.resx">
+      <DependentUpon>201307240955022_initialData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

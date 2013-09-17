@@ -4,8 +4,11 @@
 	
 	if (status != null)
 	{	
-		<div id="status-message" class="@statusType">
-			@status
+		<div class="alert alert-@statusType.ToString().ToLowerInvariant()">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <p>
+                @status
+            </p>
 		</div>
 	}
 }

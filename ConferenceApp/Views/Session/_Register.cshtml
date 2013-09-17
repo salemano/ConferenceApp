@@ -1,0 +1,45 @@
+﻿@model RegisterInSessionViewModel
+
+<h2>Register In Session @Model.SessionDescription.Title</h2>
+
+Please confirm your registration Request
+
+<div class="form-horizontal" id="register-in-session-section">
+@using (Ajax.BeginForm("Register", null, new AjaxOptions
+{
+    InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
+    UpdateTargetId = "register-in-session-section",
+    HttpMethod = "POST",
+    OnSuccess = "loadRegisterInSession(data)"
+}, new { @id = Model.SessionId }))  {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+@Html.Partial("_View", Model.SessionDescription)
+@Html.HiddenFor(s=>s.SessionId)
+
+<p>
+    @if(!Model.IsRegistered){
+        <input type="submit" value="Register" name="btnSubmit"class="btn btn-success" />
+    }
+    <a href="/Session/List" class="cancel-register btn">Cancel</a>
+</p>
+}
+</div>
+<script type="text/javascript">
+
+    $('.cancel-register').click(function () {
+
+        hideFancybox();
+        return false;
+    });
+
+    function loadRegisterInSession(data) {
+
+        if (data == '') {
+            window.location.reload();
+            return;
+        }
+    }
+
+</script>

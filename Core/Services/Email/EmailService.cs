@@ -15,7 +15,7 @@ namespace Core.Services
     {
         public void WriteMessageToFile(EmailDescription desc)
         {
-            var path = @"c:\\ConferenceAppEmails";
+            var path = @"c:\ConferenceAppEmails";
 
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);

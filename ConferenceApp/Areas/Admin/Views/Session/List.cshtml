@@ -1,0 +1,95 @@
+﻿@using ConferenceApp.Areas.Admin.Models;
+@using MvcContrib.UI.Grid;
+@using Model.Models;
+
+@model AdminSessionListViewModel
+@{
+    ViewBag.Title = Localization.ManageSessions;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/SessionAdmin.js"></script>
+
+<div class="filters">
+	<div class="fields">
+		@using (Html.BeginForm("List", "Session", FormMethod.Get, new { @class = "form-horizontal" }))
+        {
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="control-group">
+	                @Html.LabelFor(m => m.Filter.FilterText, new { @class = "control-label" })
+                        <div class="controls">
+	                        @Html.TextBoxFor(m => m.Filter.FilterText, new { @class = "input-medium search-query" })
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="control-group">
+                    @Html.LabelFor(model => model.Filter.SelectedTypeId, new { @class = "control-label" })
+                    <div class="controls">
+                    @Html.DropDownListFor(model => model.Filter.SelectedTypeId, Model.Filter.Types, new { @class = "span6" })
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                <label class="checkbox inline">
+                    <input type="CheckBox" name="Filter.ShowClosed" id="Filter_ShowClosed" value="@Model.Filter.ShowClosed"/> @Html.LabelFor(model => model.Filter.ShowClosed)
+                </label>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="control-group">
+	                @Html.LabelFor(m => m.Filter.From, new { @class = "control-label" })
+                        <div class="controls">
+                    @Html.EditorFor(model => model.Filter.From)
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="control-group">
+	                @Html.LabelFor(m => m.Filter.To, new { @class = "control-label" })
+                        <div class="controls">
+                    @Html.EditorFor(model => model.Filter.To)
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+	                <input type="submit" class="btn btn-primary" value="@Localization.Search" />
+                    <input type="reset" class="btn form-reset" value="@Localization.Clear" />
+                </div>
+            </div>       
+  }
+	</div>
+</div>
+
+
+@(Html.Grid(Model.Sessions).RowAttributes(row => new MvcContrib.Hash(@SessionId => row.Item.SessionId)).Columns(c =>
+{
+   c.For(u => u.Title).Sortable(true);
+   c.For(u => u.Email).Sortable(true);
+   c.For(u => u.Start).Format("{0:d}").Sortable(true);
+   c.For(u => u.End).Format("{0:d}").Sortable(true); 
+   c.For(u => u.Status).Sortable(true);
+   c.For(u =>u.NumberOfRegistrants).Named("Users").Sortable(true);
+   c.Custom(
+      @<div class="btn-group">
+      <a class="btn btn-primary" href="#"><i class="icon-edit icon-white"></i> Session</a>
+      <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+      <ul class="dropdown-menu">
+
+        <li><a href="Edit/@item.SessionId"><i class="icon-pencil"></i> @Localization.Edit</a></li>
+        <li><a href="Delete/@item.SessionId" class="delete-session" users="@item.NumberOfRegistrants"><i class="icon-trash"></i> @Localization.Delete</a></li>  
+      </ul>
+    </div>
+   ); 
+})
+.Attributes(@class=>"table table-hover table-bordered")
+.Sort(Model.SortOptions)
+.Empty("No sessions to display"))
+
+@Html.Pager((IPagination)Model.Sessions)
+
+
+
+    
