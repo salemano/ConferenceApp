@@ -25,8 +25,19 @@ namespace ConferenceApp.Infrastructure
             foreach (string key in helper.ViewContext.HttpContext.Request.QueryString)
             {
                 getParams.Add(key, helper.ViewContext.HttpContext.Request.QueryString[key]);
+
                 if (key != "Column" && key != "Direction")
-                    linkParams.Add(key, helper.ViewContext.HttpContext.Request.QueryString[key]);
+                {
+                    if (key == "Filter.ShowClosed")
+                    {
+                        if (helper.ViewContext.HttpContext.Request.QueryString[key].Contains("true"))
+                            linkParams.Add(key, "true");
+                        else linkParams.Add(key, "false");
+                    }
+                    else
+                        linkParams.Add(key, helper.ViewContext.HttpContext.Request.QueryString[key]);
+                }
+
             }
 
             if ((string)columnName == sortOptions.Column)

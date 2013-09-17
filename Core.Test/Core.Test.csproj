@@ -64,6 +64,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Services\Session\SessionPermissionsTest_User.cs" />
     <Compile Include="Services\Session\SessionPermissionTest_Admin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

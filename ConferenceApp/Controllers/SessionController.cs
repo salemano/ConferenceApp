@@ -105,7 +105,6 @@ namespace ConferenceApp.Controllers
                            where c.Title.Contains(filter.FilterText)
                         select c;
             }
-
             if (!filter.ShowClosed)
             {
                 sessions = from c in sessions

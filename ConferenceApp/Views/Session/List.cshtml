@@ -34,7 +34,7 @@
                 </div>
                 <div class="span4">
                 <label class="checkbox inline">
-                    <input type="CheckBox" id="Filter_ShowClosed" name="Filter.ShowClosed" value="@Model.Filter.ShowClosed"/> @Html.LabelFor(model => model.Filter.ShowClosed)
+                    @Html.CheckBox("Filter.ShowClosed", Model.Filter.ShowClosed) @Html.LabelFor(model => model.Filter.ShowClosed)
                 </label>
                 </div>
             </div>
